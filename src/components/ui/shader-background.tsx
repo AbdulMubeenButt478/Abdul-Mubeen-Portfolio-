@@ -196,9 +196,28 @@ const ShaderBackground = ({ darkMode = true }: { darkMode?: boolean }) => {
 
     let startTime = Date.now();
     let animationFrameId: number;
+    let isVisible = true;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isVisible = entry.isIntersecting;
+          if (isVisible) {
+            startTime = Date.now() - (currentTime * 1000); // Resume from where it left off
+            animationFrameId = requestAnimationFrame(render);
+          }
+        });
+      },
+      { threshold: 0 }
+    );
+    observer.observe(canvas);
+
+    let currentTime = 0;
 
     const render = () => {
-      const currentTime = (Date.now() - startTime) / 1000;
+      if (!isVisible) return; // Pause rendering if not visible
+
+      currentTime = (Date.now() - startTime) / 1000;
 
       gl.clearColor(0.0, 0.0, 0.0, 1.0);
       gl.clear(gl.COLOR_BUFFER_BIT);
@@ -229,6 +248,7 @@ const ShaderBackground = ({ darkMode = true }: { darkMode?: boolean }) => {
     return () => {
       window.removeEventListener('resize', resizeCanvas);
       cancelAnimationFrame(animationFrameId);
+      observer.disconnect();
     };
   }, []);
 

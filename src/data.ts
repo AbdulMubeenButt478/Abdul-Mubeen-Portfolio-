@@ -76,7 +76,7 @@ export const portfolioData = {
     },
     {
       title: "Number Guesser",
-      description: "An Interactive Game and logic-driven web app with dynamic feedback and score tracking. Built with pure JS to showcase efficient event handling and performance.",
+      description: "An Interactive Game and logic-driven web app with dynamic feedback and score tracking. Built with pure JS to showcase efficient event handling.",
       tech: ["HTML", "CSS", "JavaScript"],
       link: "#",
       image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800&h=600"

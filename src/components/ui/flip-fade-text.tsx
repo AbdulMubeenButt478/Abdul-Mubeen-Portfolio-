@@ -74,12 +74,12 @@ const Word = memo(function Word({
   letterDuration: number
   textClassName?: string
 }) {
-  const letters = useMemo(() => text.split(""), [text])
+  const words = useMemo(() => text.split(" "), [text])
 
   return (
     <motion.div
       className={cn(
-        "flex gap-[0.05em] font-bold uppercase tracking-wider",
+        "flex flex-wrap justify-center gap-x-1.5 gap-y-1 font-bold uppercase tracking-wider",
         textClassName
       )}
       initial="initial"
@@ -101,12 +101,17 @@ const Word = memo(function Word({
         },
       }}
     >
-      {letters.map((char, i) => (
-        <Letter 
-          key={`${char}-${i}`} 
-          char={char} 
-          letterDuration={letterDuration} 
-        />
+      {words.map((word, wordIndex) => (
+        <span key={wordIndex} className="flex whitespace-nowrap">
+          {word.split("").map((char, charIndex) => (
+            <Letter 
+              key={`${wordIndex}-${charIndex}`} 
+              char={char} 
+              letterDuration={letterDuration} 
+            />
+          ))}
+          {wordIndex < words.length - 1 && <span className="inline-block">&nbsp;</span>}
+        </span>
       ))}
     </motion.div>
   )
