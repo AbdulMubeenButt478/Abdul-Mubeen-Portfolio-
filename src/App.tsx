@@ -395,7 +395,7 @@ export default function App() {
       <div 
         className={cn(
           "fixed inset-0 pointer-events-none z-[1] bg-[radial-gradient(circle_at_50%_0%,rgba(99,102,241,0.15),transparent_70%)] transition-opacity duration-700",
-          darkMfo ode ? "opacity-50" : "opacity-0"
+          darkMode ? "opacity-50" : "opacity-0"
         )} 
       />
       {/* Floating Background Glows - GPU accelerated, reduced blur */}
@@ -511,15 +511,36 @@ export default function App() {
               {darkMode ? <Sun className="w-4 md:w-5 h-4 md:h-5" /> : <Moon className="w-4 md:w-5 h-4 md:h-5" />}
             </motion.button>
 
-            <motion.a 
-              href="#contact" 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={(e) => handleNavClick(e, '#contact')}
-              className="ml-3 md:ml-4 bg-brand text-white px-4 md:px-6 py-2 rounded-full text-xs md:text-sm font-bold hover:bg-brand-dark transition-all duration-300 shadow-lg shadow-brand/20 hover:shadow-brand/40 hover:-translate-y-0.5 relative overflow-hidden group whitespace-nowrap"
+            <a 
+              href="#lets-talk"
+              onClick={(e) => handleNavClick(e as any, '#lets-talk')}
+              className="ml-3 md:ml-4 talk-button hidden sm:flex decoration-none"
             >
-              Let's Talk
-            </motion.a>
+              <div className="span-mother">
+                <span>L</span>
+                <span>e</span>
+                <span>t</span>
+                <span>'</span>
+                <span>s</span>
+                <span>&nbsp;</span>
+                <span>T</span>
+                <span>a</span>
+                <span>l</span>
+                <span>k</span>
+              </div>
+              <div className="span-mother2">
+                <span>L</span>
+                <span>e</span>
+                <span>t</span>
+                <span>'</span>
+                <span>s</span>
+                <span>&nbsp;</span>
+                <span>T</span>
+                <span>a</span>
+                <span>l</span>
+                <span>k</span>
+              </div>
+            </a>
           </motion.div>
 
           {/* Mobile Menu Toggle */}
@@ -639,7 +660,7 @@ export default function App() {
                 visible: { opacity: 1, y: 0 }
               }}
               className={cn(
-                "inline-flex items-center self-start gap-2 px-3 py-2 rounded-2xl sm:rounded-full border-2 text-brand text-sm font-bold tracking-wider uppercase mb-6 sm:mb-8 shadow-sm -mt-2 sm:-mt-4 max-w-full",
+                "inline-flex items-center self-start gap-2 px-3 py-1.5 sm:py-2 rounded-2xl sm:rounded-full border-2 text-brand text-sm font-bold uppercase mb-4 sm:mb-8 shadow-sm -mt-2 sm:-mt-4 max-w-full",
                 darkMode ? "bg-white/[0.02] backdrop-blur-2xl border-white/5 hover:border-brand/30 shadow-[0_0_30px_rgba(37,99,235,0.03)] hover:shadow-[0_0_40px_rgba(37,99,235,0.1)] transition-all duration-500" : "bg-white/80 backdrop-blur-md border-slate-200/60 shadow-xl shadow-slate-200/50"
               )}
             >
@@ -670,8 +691,8 @@ export default function App() {
                 darkMode ? "text-white" : "text-slate-900"
               )}
             >
-              <span className="block">Transforming Web Performance into</span>
-              <span className="block text-gradient">Measurable Growth</span>
+              <span className="block">Web Performance &</span>
+              <span className="block text-gradient">Strategic Maintenance</span>
             </motion.h1>
             
             <motion.p 
@@ -1299,7 +1320,7 @@ export default function App() {
       </section>
 
       {/* Let's Work Together */}
-      <section className={cn(
+      <section id="lets-talk" className={cn(
         "py-24 px-6 sm:px-12 my-8 mx-auto max-w-[95%] xl:max-w-7xl relative overflow-hidden border transition-colors duration-500 rounded-[2.5rem]",
         darkMode ? "bg-white/[0.02] backdrop-blur-2xl border-white/5 hover:border-brand/30 shadow-[0_0_30px_rgba(37,99,235,0.03)] hover:shadow-[0_0_40px_rgba(37,99,235,0.1)] rounded-[2.5rem] transition-all duration-500" : "bg-white/40 backdrop-blur-3xl border-indigo-100/50 rounded-[3rem] shadow-[0_20px_50px_rgba(79,70,229,0.05)] transition-all duration-500"
       )}>
@@ -1771,7 +1792,7 @@ export default function App() {
                 <motion.li whileHover={{ x: 5 }} className="flex items-center gap-3 sm:gap-4 text-slate-500 text-sm sm:text-base group">
                   <a href={`mailto:${portfolioData.email}`} className="flex items-center gap-3 sm:gap-4 hover:text-brand transition-colors font-medium break-all">
                     <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-[#EA4335] shrink-0" />
-                    {portfolioData.email.replace('gmail', 'Gmail')}
+                    {portfolioData.email}
                   </a>
                 </motion.li>
                 <motion.li whileHover={{ x: 5 }} className="flex items-center gap-3 sm:gap-4 text-slate-500 text-sm sm:text-base group">

@@ -79,7 +79,7 @@ const Word = memo(function Word({
   return (
     <motion.div
       className={cn(
-        "flex flex-wrap justify-center gap-x-1.5 gap-y-1 font-bold uppercase tracking-wider",
+        "flex flex-wrap justify-start gap-x-1 gap-y-0.5 font-bold uppercase",
         textClassName
       )}
       initial="initial"
@@ -110,7 +110,6 @@ const Word = memo(function Word({
               letterDuration={letterDuration} 
             />
           ))}
-          {wordIndex < words.length - 1 && <span className="inline-block">&nbsp;</span>}
         </span>
       ))}
     </motion.div>
@@ -140,8 +139,8 @@ export function FlipFadeText({
   const currentWord = useMemo(() => words[index], [words, index])
 
   return (
-    <div className={cn("inline-flex items-center justify-center", className)}>
-      <div className="relative flex items-center justify-center" style={{ perspective: "1000px" }}>
+    <div className={cn("inline-flex items-center justify-start", className)}>
+      <div className="relative flex items-center justify-start" style={{ perspective: "1000px" }}>
         <AnimatePresence mode="wait">
           <Word 
             key={currentWord} 

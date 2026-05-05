@@ -136,3 +136,87 @@ html, body {
     @apply w-full max-w-7xl mx-auto px-4 md:px-6;
   }
 }
+
+/* Let's Talk Button Animation */
+/* From Uiverse.io by KINGFRESS */ 
+.talk-button {
+  font-weight: bold;
+  color: white;
+  border-radius: 2rem;
+  cursor: pointer;
+  width: 120px; /* Adjusted from 95.02px for better fit */
+  height: 42px;
+  border: none;
+  background-color: var(--color-brand);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s;
+  text-decoration: none;
+}
+
+.talk-button:hover {
+  background-color: var(--color-brand-dark);
+}
+
+.talk-button .span-mother {
+  display: flex;
+  overflow: hidden;
+}
+
+.talk-button:hover .span-mother {
+  opacity: 0; /* Smoothly hide the first one */
+}
+
+.talk-button .span-mother span {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.talk-button:hover .span-mother span {
+  transform: translateY(1.2em);
+}
+
+.talk-button .span-mother span:nth-child(1) { transition-delay: 0.0s; }
+.talk-button .span-mother span:nth-child(2) { transition-delay: 0.05s; }
+.talk-button .span-mother span:nth-child(3) { transition-delay: 0.1s; }
+.talk-button .span-mother span:nth-child(4) { transition-delay: 0.15s; }
+.talk-button .span-mother span:nth-child(5) { transition-delay: 0.2s; }
+.talk-button .span-mother span:nth-child(6) { transition-delay: 0.25s; }
+.talk-button .span-mother span:nth-child(7) { transition-delay: 0.3s; }
+.talk-button .span-mother span:nth-child(8) { transition-delay: 0.35s; }
+.talk-button .span-mother span:nth-child(9) { transition-delay: 0.4s; }
+.talk-button .span-mother span:nth-child(10) { transition-delay: 0.45s; }
+
+.talk-button .span-mother2 {
+  display: flex;
+  position: absolute;
+  overflow: hidden;
+}
+
+.talk-button .span-mother2 span {
+  display: inline-block;
+  transform: translateY(-1.2em);
+  transition: transform 0.3s ease;
+}
+
+.talk-button:hover .span-mother2 span {
+  transform: translateY(0);
+}
+
+.talk-button .span-mother2 span:nth-child(1) { transition-delay: 0.0s; }
+.talk-button .span-mother2 span:nth-child(2) { transition-delay: 0.05s; }
+.talk-button .span-mother2 span:nth-child(3) { transition-delay: 0.1s; }
+.talk-button .span-mother2 span:nth-child(4) { transition-delay: 0.15s; }
+.talk-button .span-mother2 span:nth-child(5) { transition-delay: 0.2s; }
+.talk-button .span-mother2 span:nth-child(6) { transition-delay: 0.25s; }
+.talk-button .span-mother2 span:nth-child(7) { transition-delay: 0.3s; }
+.talk-button .span-mother2 span:nth-child(8) { transition-delay: 0.35s; }
+.talk-button .span-mother2 span:nth-child(9) { transition-delay: 0.4s; }
+.talk-button .span-mother2 span:nth-child(10) { transition-delay: 0.45s; }
+
+
+
+
