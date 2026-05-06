@@ -374,10 +374,10 @@ export default function App() {
   };
 
   const navLinks = [
-    { name: 'About Me', href: '#about' },
-    { name: 'Technical Skills', href: '#skills' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Experience', href: '#experience' },
+    { name: 'About Me', href: '#about', icon: User },
+    { name: 'Technical Skills', href: '#skills', icon: Cpu },
+    { name: 'Projects', href: '#projects', icon: Layout },
+    { name: 'Experience', href: '#experience', icon: Briefcase },
   ];
 
   return (
@@ -514,7 +514,7 @@ export default function App() {
             <a 
               href="#lets-talk"
               onClick={(e) => handleNavClick(e as any, '#lets-talk')}
-              className="ml-3 md:ml-4 talk-button hidden sm:flex decoration-none"
+              className="ml-2 sm:ml-4 talk-button flex decoration-none scale-90 sm:scale-100 origin-right"
             >
               <div className="span-mother">
                 <span>L</span>
@@ -558,70 +558,112 @@ export default function App() {
         </div>
 
         {/* Mobile Menu */}
-        {isMenuOpen && (
-          <motion.div 
-            initial={{ opacity: 0, y: -20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className={cn(
-              "md:hidden absolute top-full left-0 w-full backdrop-blur-xl border-b-2 border-brand/10 px-4 py-6 flex flex-col gap-3 shadow-2xl",
-              darkMode ? "bg-[#0f172a]/40" : "bg-white/95"
-            )}
-          >
+        <AnimatePresence mode="wait">
+          {isMenuOpen && (
             <motion.div 
-              initial="hidden"
-              animate="visible"
-              variants={{
-                hidden: { opacity: 0 },
-                visible: {
-                  opacity: 1,
-                  transition: {
-                    staggerChildren: 0.1
-                  }
-                }
-              }}
-              className="flex flex-col gap-2"
-            >
-              {navLinks.map((link) => (
-                <motion.a 
-                  key={link.name} 
-                  href={link.href} 
-                  variants={{
-                    hidden: { opacity: 0, x: -20 },
-                    visible: { opacity: 1, x: 0 }
-                  }}
-                  onClick={(e) => handleNavClick(e, link.href)}
-                  className={cn(
-                    "text-base font-bold p-3 rounded-xl sm:rounded-2xl hover:bg-brand/5 transition-all",
-                    darkMode ? "text-white" : "text-slate-900"
-                  )}
-                >
-                  {link.name}
-                </motion.a>
-              ))}
-            </motion.div>
-            <motion.a 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              href="#contact" 
-              onClick={(e) => handleNavClick(e, '#contact')}
+              key="mobile-menu"
+              initial={{ opacity: 0, y: -20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.95 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
               className={cn(
-                "bg-brand text-white px-6 py-3 rounded-lg sm:rounded-2xl text-center font-bold shadow-lg shadow-brand/20 mt-2",
-                "transition-all hover:bg-brand-dark"
+                "md:hidden absolute top-full left-0 w-full backdrop-blur-xl border-b-2 border-brand/10 px-4 py-6 flex flex-col gap-3 shadow-2xl z-[100] max-h-[85vh] overflow-y-auto",
+                darkMode ? "bg-[#0f172a]/95" : "bg-white/98"
               )}
             >
-              Let's Talk
-            </motion.a>
-          </motion.div>
-        )}
+              <motion.div 
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: {
+                    opacity: 1,
+                    transition: {
+                      staggerChildren: 0.1
+                    }
+                  }
+                }}
+                className="flex flex-col gap-3"
+              >
+                {navLinks.map((link) => (
+                  <motion.a 
+                    key={link.name} 
+                    href={link.href} 
+                    variants={{
+                      hidden: { opacity: 0, x: -20, filter: "blur(10px)" },
+                      visible: { opacity: 1, x: 0, filter: "blur(0px)" }
+                    }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={(e) => handleNavClick(e, link.href)}
+                    className={cn(
+                      "flex items-center gap-4 p-4 rounded-2xl transition-all border group",
+                      darkMode 
+                        ? "text-slate-300 hover:text-white bg-white/[0.02] border-white/5 hover:border-brand/30 hover:bg-white/[0.05]" 
+                        : "text-slate-600 hover:text-brand bg-slate-50 border-slate-100 hover:border-brand/20 hover:bg-white"
+                    )}
+                  >
+                    <div className={cn(
+                      "w-10 h-10 rounded-xl flex items-center justify-center transition-colors group-hover:scale-110",
+                      darkMode ? "bg-white/[0.05]" : "bg-white shadow-sm"
+                    )}>
+                      <link.icon className="w-5 h-5" />
+                    </div>
+                    <div className="rolling-text text-base font-bold uppercase tracking-widest">
+                      <div className="span-mother">
+                        {link.name.split('').map((char, i) => (
+                          <span key={i} style={{ '--delay': `${i * 0.05}s` } as any}>{char === ' ' ? '\u00A0' : char}</span>
+                        ))}
+                      </div>
+                      <div className="span-mother2">
+                        {link.name.split('').map((char, i) => (
+                          <span key={i} style={{ '--delay': `${i * 0.05}s` } as any}>{char === ' ' ? '\u00A0' : char}</span>
+                        ))}
+                      </div>
+                    </div>
+                    <ChevronRight className="w-5 h-5 ml-auto opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
+                  </motion.a>
+                ))}
+
+                {/* Let's Talk Button integrated into the menu list */}
+                <motion.a 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                  href="#contact" 
+                  onClick={(e) => handleNavClick(e, '#contact')}
+                  className={cn(
+                    "w-full h-14 bg-brand text-white rounded-2xl text-center font-bold shadow-xl shadow-brand/20 flex items-center justify-center gap-2 group relative overflow-hidden mt-2",
+                    "transition-all active:scale-[0.98]"
+                  )}
+                >
+                  <div className="rolling-text relative z-10 text-sm font-bold uppercase tracking-widest">
+                    <div className="span-mother">
+                      {"LET'S TALK".split('').map((char, i) => (
+                        <span key={i} style={{ '--delay': `${i * 0.05}s` } as any}>{char === ' ' ? '\u00A0' : char}</span>
+                      ))}
+                    </div>
+                    <div className="span-mother2">
+                      {"LET'S TALK".split('').map((char, i) => (
+                        <span key={i} style={{ '--delay': `${i * 0.05}s` } as any}>{char === ' ' ? '\u00A0' : char}</span>
+                      ))}
+                    </div>
+                  </div>
+                  <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                </motion.a>
+              </motion.div>
+
+
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
 
       {/* Hero Section */}
       <section 
         id="top"
         className={cn(
-          "relative min-h-[70vh] sm:min-h-[75vh] md:min-h-[85vh] lg:min-h-screen flex items-start sm:items-center px-4 sm:px-6 pt-20 sm:pt-24 pb-8 sm:pb-12 overflow-hidden transition-colors duration-500 z-10",
+          "relative min-h-[70vh] sm:min-h-[75vh] md:min-h-[85vh] lg:min-h-screen flex items-start sm:items-center px-4 sm:px-6 pt-24 sm:pt-28 pb-8 sm:pb-12 overflow-hidden transition-colors duration-500 z-10",
           darkMode ? "bg-[#0f172a] text-white" : "bg-[#f8fafc] text-slate-900"
         )}
       >
@@ -687,7 +729,7 @@ export default function App() {
                 visible: { opacity: 1, y: 0 }
               }}
               className={cn(
-                "text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] font-bold font-display leading-tight mb-4 tracking-tighter transition-colors",
+                "text-3xl sm:text-4xl md:text-5xl lg:text-[2.75rem] font-bold font-display leading-[1.1] mb-4 tracking-tighter transition-colors text-center lg:text-left",
                 darkMode ? "text-white" : "text-slate-900"
               )}
             >
@@ -759,16 +801,15 @@ export default function App() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 1, x: 0 }}
             animate={{ 
               opacity: 1, 
               x: 0,
             }}
             transition={{ 
-              opacity: { duration: 1, delay: 0.2 },
-              x: { duration: 1, delay: 0.2 }
+              duration: 0.8
             }}
-            className="relative flex items-center justify-center lg:justify-end -translate-y-4 lg:-translate-y-8"
+            className="relative flex items-center justify-center lg:justify-end"
           >
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[80%] bg-brand/5 rounded-full blur-3xl -z-10" />
             <motion.div
@@ -858,7 +899,7 @@ export default function App() {
 
       {/* About Section */}
       <section id="about" className={cn(
-        "py-24 sm:py-32 px-6 sm:px-12 md:px-20 min-h-screen flex items-center transition-colors duration-500 relative overflow-hidden z-10 border-b",
+        "py-12 lg:py-32 px-6 sm:px-12 md:px-20 min-h-fit lg:min-h-screen flex items-center transition-colors duration-500 relative overflow-hidden z-10 border-b",
         darkMode ? "bg-white/[0.01] border-white/5" : "bg-slate-50/30 border-indigo-50"
       )}>
         <div className="absolute top-1/2 left-0 w-64 sm:w-80 h-64 sm:h-80 bg-brand/5 rounded-full blur-[100px] -z-10" />
@@ -867,7 +908,7 @@ export default function App() {
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="relative"
+            className="relative hidden lg:block"
           >
             <motion.div 
               animate={{ y: [0, -10, 0] }}
@@ -914,7 +955,7 @@ export default function App() {
             </motion.div>
           </motion.div>
           
-          <div className="mt-8 lg:mt-0 flex flex-col">
+          <div className="lg:mt-0 flex flex-col">
             <SectionTitle 
               subtitle="I am a Software Engineer and Web Manager focused on building high-performance websites and strategic digital solutions." 
               darkMode={darkMode}
@@ -998,7 +1039,7 @@ export default function App() {
 
       {/* Skills Section */}
       <section id="skills" className={cn(
-        "py-24 sm:py-32 px-6 sm:px-12 md:px-20 min-h-screen flex items-center transition-colors duration-500 relative overflow-hidden z-10 border-b",
+        "py-12 lg:py-32 px-6 sm:px-12 md:px-20 min-h-fit lg:min-h-screen flex items-center transition-colors duration-500 relative overflow-hidden z-10 border-b",
         darkMode ? "bg-white/[0.02] border-white/5" : "bg-white/60 border-slate-200/50"
       )}>
         <div className="absolute top-0 right-0 w-48 sm:w-64 h-48 sm:h-64 bg-brand/5 rounded-full blur-3xl -z-10" />
@@ -1081,7 +1122,7 @@ export default function App() {
                   <Briefcase className="w-5 sm:w-6 h-5 sm:h-6 text-brand" />
                 </div>
                 <h2 className={cn("text-2xl sm:text-3xl font-bold", darkMode ? "text-white" : "text-slate-900")}>Experience</h2>
-                <div className="absolute -bottom-4 left-0 h-1 w-20 bg-brand rounded-full" />
+                <div className="absolute -bottom-4 left-0 h-1.5 w-20 bg-gradient-to-r from-brand to-accent rounded-full" />
               </div>
             
             <motion.div 
@@ -1126,6 +1167,8 @@ export default function App() {
                 </motion.div>
               ))}
             </motion.div>
+
+
           </div>
             {/* Education */}
             <div>
@@ -1134,7 +1177,7 @@ export default function App() {
                   <GraduationCap className="w-5 sm:w-6 h-5 sm:h-6 text-brand" />
                 </div>
                 <h2 className={cn("text-2xl sm:text-3xl font-bold", darkMode ? "text-white" : "text-slate-900")}>Education</h2>
-                <div className="absolute -bottom-4 left-0 h-1 w-20 bg-brand rounded-full" />
+                <div className="absolute -bottom-4 left-0 h-1.5 w-20 bg-gradient-to-r from-brand to-accent rounded-full" />
               </div>
             <motion.div 
               initial="hidden"
@@ -1255,7 +1298,7 @@ export default function App() {
 
       {/* Current Projects Section */}
       <section id="current-projects" className={cn(
-        "py-24 sm:py-32 px-6 sm:px-12 md:px-20 min-h-screen flex items-center transition-colors duration-500 relative overflow-hidden z-10 border-b",
+        "py-12 lg:py-32 px-6 sm:px-12 md:px-20 min-h-fit lg:min-h-screen flex items-center transition-colors duration-500 relative overflow-hidden z-10 border-b",
         darkMode ? "bg-white/[0.02] border-white/5" : "bg-white/40 border-indigo-100/50"
       )}>
         <div className="max-w-7xl mx-auto">
@@ -1287,7 +1330,7 @@ export default function App() {
 
       {/* Projects Section */}
       <section id="projects" className={cn(
-        "py-24 sm:py-32 px-6 sm:px-12 md:px-20 min-h-screen flex items-center transition-colors duration-500 relative overflow-hidden z-10 border-b",
+        "py-12 lg:py-32 px-6 sm:px-12 md:px-20 min-h-fit lg:min-h-screen flex items-center transition-colors duration-500 relative overflow-hidden z-10 border-b",
         darkMode ? "bg-white/[0.01] border-white/5" : "bg-white/40 border-indigo-100/50"
       )}>
         <div className="absolute top-1/4 left-0 w-48 sm:w-72 h-48 sm:h-72 bg-brand/5 rounded-full blur-2xl sm:blur-3xl -z-10" />
@@ -1321,7 +1364,7 @@ export default function App() {
 
       {/* Let's Work Together */}
       <section id="lets-talk" className={cn(
-        "py-24 px-6 sm:px-12 my-8 mx-auto max-w-[95%] xl:max-w-7xl relative overflow-hidden border transition-colors duration-500 rounded-[2.5rem]",
+        "py-12 lg:py-24 px-6 sm:px-12 my-8 mx-auto max-w-[95%] xl:max-w-7xl relative overflow-hidden border transition-colors duration-500 rounded-[2.5rem]",
         darkMode ? "bg-white/[0.02] backdrop-blur-2xl border-white/5 hover:border-brand/30 shadow-[0_0_30px_rgba(37,99,235,0.03)] hover:shadow-[0_0_40px_rgba(37,99,235,0.1)] rounded-[2.5rem] transition-all duration-500" : "bg-white/40 backdrop-blur-3xl border-indigo-100/50 rounded-[3rem] shadow-[0_20px_50px_rgba(79,70,229,0.05)] transition-all duration-500"
       )}>
         <div className="max-w-4xl mx-auto text-center relative z-10">
@@ -1330,7 +1373,7 @@ export default function App() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             className={cn(
-              "p-12 rounded-[3rem] border relative overflow-hidden",
+              "p-8 sm:p-12 rounded-[3rem] border relative overflow-hidden",
               darkMode ? "bg-white/[0.02] border-white/10" : "bg-slate-50 border-slate-100"
             )}
           >
@@ -1617,7 +1660,7 @@ export default function App() {
 
       {/* Philosophy Section */}
       <section className={cn(
-        "py-24 sm:py-32 px-6 sm:px-12 md:px-20 transition-colors duration-500 relative overflow-hidden z-10 border-b",
+        "py-12 lg:py-32 px-6 sm:px-12 md:px-20 transition-colors duration-500 relative overflow-hidden z-10 border-b",
         darkMode ? "bg-white/[0.01] border-white/5" : "bg-slate-50/30 border-indigo-50"
       )}>
         <div className="max-w-7xl mx-auto">
@@ -1711,7 +1754,7 @@ export default function App() {
 
       {/* Footer */}
       <footer className={cn(
-        "py-20 px-6 transition-colors duration-500 mt-12",
+        "py-10 lg:py-20 px-6 transition-colors duration-500 mt-4 lg:mt-12",
         darkMode ? "bg-white/[0.02] backdrop-blur-2xl border-white/5 hover:border-brand/30 shadow-[0_0_30px_rgba(37,99,235,0.03)] hover:shadow-[0_0_40px_rgba(37,99,235,0.1)] rounded-[2.5rem] transition-all duration-500" : "bg-white/40 backdrop-blur-3xl border-indigo-100/50 rounded-[3rem] shadow-[0_20px_50px_rgba(79,70,229,0.05)] transition-all duration-500"
       )}>
         <div className="max-w-7xl mx-auto">

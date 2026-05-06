@@ -217,6 +217,40 @@ html, body {
 .talk-button .span-mother2 span:nth-child(9) { transition-delay: 0.4s; }
 .talk-button .span-mother2 span:nth-child(10) { transition-delay: 0.45s; }
 
+/* Generic Rolling Text Animation */
+.rolling-text {
+  display: inline-flex;
+  position: relative;
+  overflow: hidden;
+  line-height: 1.2;
+}
+
+.rolling-text .span-mother,
+.rolling-text .span-mother2 {
+  display: flex;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rolling-text .span-mother2 {
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+
+.group:hover .rolling-text .span-mother {
+  transform: translateY(-100%);
+}
+
+.group:hover .rolling-text .span-mother2 {
+  transform: translateY(-100%);
+}
+
+.rolling-text span {
+  display: inline-block;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--delay);
+}
+
 
 
 
