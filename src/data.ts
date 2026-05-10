@@ -2,7 +2,7 @@ import cposLogo from './cpos.png';
 import photo from './mubeen.png';
 import passwordGeneratorImage from './password_generator.png';
 import aghaFanImage from './agha_fan_ui.png';
-import ticTacToeImage from './tictactoe_ui.png';
+import weatherAppImage from './weather_app.png';
 
 export const portfolioData = {
  
@@ -61,29 +61,29 @@ export const portfolioData = {
   ],
   projects: [
     {
+      title: "Weather App",
+      description: "A real-time weather application providing accurate forecasts using OpenWeather API. Features a modern glassmorphic UI with dynamic background changes based on weather conditions.",
+      tech: ["React", "JavaScript", "Tailwind CSS"],
+      link: "#",
+      image: weatherAppImage
+    },
+    {
       title: "Agha Fan Inventory",
-      description: "A high-performance inventory system for online fan sales. Features real-time stock tracking and a seamless UI built with HTML, CSS, and JavaScript.",
+      description: "A high-performance inventory system for online fan sales. Features real-time stock tracking and a seamless UI built with HTML, CSS, and JavaScript for efficient business management.",
       tech: ["HTML", "CSS", "JavaScript"],
       link: "#",
       image: aghaFanImage
     },
     {
-      title: "Tic Tac Toe",
-      description: "A JavaScript game with real-time win-detection and responsive design. Demonstrates advanced DOM manipulation and state management.",
-      tech: ["HTML", "CSS", "JavaScript"],
-      link: "#",
-      image: ticTacToeImage
-    },
-    {
       title: "Number Guesser",
-      description: "An Interactive Game and logic-driven web app with dynamic feedback and score tracking. Built with pure JS to showcase efficient event handling.",
+      description: "An interactive and logic-driven web application featuring dynamic user feedback and real-time score tracking. Built with pure JavaScript to demonstrate advanced event handling.",
       tech: ["HTML", "CSS", "JavaScript"],
       link: "#",
       image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800&h=600"
     },
     {
       title: "Password Generator",
-      description: "A secure and customizable password generator application. Features various character options and real-time password strength evaluation.",
+      description: "A secure and customizable password generator application. Features multiple character options, real-time strength evaluation, and a sleek interface for enhanced digital security.",
       tech: ["React", "JavaScript", "CSS"],
       link: "#",
       image: passwordGeneratorImage

@@ -136,7 +136,10 @@ const ProjectCard = ({ project, index, isCurrent, darkMode }: { project: any, in
       </div>
       
       <div className="p-6 flex flex-col flex-1">
-        <div className="flex flex-nowrap overflow-x-auto gap-2 mb-4 pb-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <div className={cn(
+          "flex flex-wrap gap-2 mb-4",
+          !isCurrent && "md:hidden"
+        )}>
           {project.tech.map(t => {
             const skillInfo = { color: darkMode ? "text-slate-300" : "text-slate-600" };
             return (
@@ -729,7 +732,7 @@ export default function App() {
                 visible: { opacity: 1, y: 0 }
               }}
               className={cn(
-                "text-3xl sm:text-4xl md:text-5xl lg:text-[2.75rem] font-bold font-display leading-[1.1] mb-4 tracking-tighter transition-colors text-center lg:text-left",
+                "text-3xl sm:text-4xl md:text-5xl lg:text-[2.75rem] font-bold font-display leading-tight pb-2 mb-4 tracking-tighter transition-colors text-center lg:text-left",
                 darkMode ? "text-white" : "text-slate-900"
               )}
             >
@@ -743,7 +746,7 @@ export default function App() {
                 visible: { opacity: 1, y: 0 }
               }}
               className={cn(
-                "text-base sm:text-lg md:text-xl max-w-2xl mb-6 sm:mb-8 leading-relaxed text-justify transition-colors",
+                "text-base sm:text-lg md:text-xl max-w-2xl mt-2 sm:mt-3 mb-6 sm:mb-8 leading-relaxed text-justify transition-colors",
                 darkMode ? "text-slate-400" : "text-slate-600"
               )}
             >
@@ -809,7 +812,7 @@ export default function App() {
             transition={{ 
               duration: 0.8
             }}
-            className="relative flex items-center justify-center lg:justify-end"
+            className="relative flex items-center justify-center lg:justify-end lg:-mt-12"
           >
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[80%] bg-brand/5 rounded-full blur-3xl -z-10" />
             <motion.div
@@ -840,7 +843,7 @@ export default function App() {
 
       {/* Stats Section */}
       <section className={cn(
-        "py-24 sm:py-32 px-6 sm:px-12 md:px-20 transition-all duration-700 relative overflow-hidden z-10 border-y",
+        "py-12 sm:py-16 px-6 sm:px-12 md:px-20 transition-all duration-700 relative overflow-hidden z-10 border-y",
         darkMode ? "bg-[#0f172a]/80 border-white/5" : "bg-white/40 border-indigo-100/50 shadow-sm"
       )}>
         <div className="max-w-7xl mx-auto">
@@ -899,7 +902,7 @@ export default function App() {
 
       {/* About Section */}
       <section id="about" className={cn(
-        "py-12 lg:py-32 px-6 sm:px-12 md:px-20 min-h-fit lg:min-h-screen flex items-center transition-colors duration-500 relative overflow-hidden z-10 border-b",
+        "pt-8 pb-12 lg:py-20 px-6 sm:px-12 md:px-20 min-h-fit lg:min-h-screen flex items-center transition-colors duration-500 relative overflow-hidden z-10 border-b",
         darkMode ? "bg-white/[0.01] border-white/5" : "bg-slate-50/30 border-indigo-50"
       )}>
         <div className="absolute top-1/2 left-0 w-64 sm:w-80 h-64 sm:h-80 bg-brand/5 rounded-full blur-[100px] -z-10" />
@@ -979,34 +982,34 @@ export default function App() {
             
             <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 mt-4">
               <motion.div 
-                whileHover={{ y: -8, scale: 1.02 }}
+                whileHover={{ y: -6, scale: 1.01 }}
                 className={cn(
-                  "p-4 sm:p-6 rounded-lg sm:rounded-2xl border transition-all group relative overflow-hidden",
+                  "p-3.5 sm:p-5 rounded-xl sm:rounded-2xl border transition-all group relative overflow-hidden",
                   darkMode 
                     ? "bg-white/[0.02] backdrop-blur-xl border-white/10 hover:bg-white/[0.05] hover:shadow-[0_0_30px_rgba(37,99,235,0.2)]" 
                     : "bg-white/60 backdrop-blur-lg border-indigo-100 hover:bg-white/80 hover:border-brand/50 shadow-xl shadow-brand/5 hover:shadow-[0_0_30px_rgba(37,99,235,0.2)]"
                 )}
               >
-                <div className="w-12 sm:w-14 h-12 sm:h-14 rounded-lg sm:rounded-xl bg-brand/10 flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform group-hover:bg-brand group-hover:text-white shadow-md shadow-brand/5">
-                  <Settings className="w-6 sm:w-7 h-6 sm:h-7 text-brand group-hover:text-white transition-colors" />
+                <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-lg sm:rounded-xl bg-brand/10 flex items-center justify-center mb-2.5 sm:mb-3 group-hover:scale-110 transition-transform group-hover:bg-brand group-hover:text-white shadow-md shadow-brand/5">
+                  <Settings className="w-5 sm:w-6 h-5 sm:h-6 text-brand group-hover:text-white transition-colors" />
                 </div>
-                <h4 className={cn("font-bold mb-2 text-base sm:text-lg md:text-xl", darkMode ? "text-white" : "text-slate-900")}>Web Management</h4>
-                <p className={cn("text-xs sm:text-sm leading-relaxed", darkMode ? "text-slate-300" : "text-slate-500")}>Managing website content and performance at scale with precision.</p>
+                <h4 className={cn("font-bold mb-1.5 text-sm sm:text-base md:text-lg", darkMode ? "text-white" : "text-slate-900")}>Web Management</h4>
+                <p className={cn("text-[11px] sm:text-xs leading-relaxed", darkMode ? "text-slate-300" : "text-slate-500")}>Managing web content and performance with precision.</p>
               </motion.div>
               <motion.div 
-                whileHover={{ y: -8, scale: 1.02 }}
+                whileHover={{ y: -6, scale: 1.01 }}
                 className={cn(
-                  "p-4 sm:p-6 rounded-lg sm:rounded-2xl border transition-all group relative overflow-hidden",
+                  "p-3.5 sm:p-5 rounded-xl sm:rounded-2xl border transition-all group relative overflow-hidden",
                   darkMode 
                     ? "bg-white/[0.02] backdrop-blur-xl border-white/10 hover:bg-white/[0.05] hover:border-accent/50 hover:shadow-[0_0_30px_rgba(245,158,11,0.2)]" 
                     : "bg-white/60 backdrop-blur-lg border-indigo-100 hover:bg-white/80 hover:border-accent/50 shadow-xl shadow-accent/5 hover:shadow-[0_0_30px_rgba(245,158,11,0.2)]"
                 )}
               >
-                <div className="w-12 sm:w-14 h-12 sm:h-14 rounded-lg sm:rounded-xl bg-accent/10 flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform group-hover:bg-accent group-hover:text-white shadow-md shadow-accent/5">
-                  <Palette className="w-6 sm:w-7 h-6 sm:h-7 text-accent group-hover:text-white transition-colors" />
+                <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-lg sm:rounded-xl bg-accent/10 flex items-center justify-center mb-2.5 sm:mb-3 group-hover:scale-110 transition-transform group-hover:bg-accent group-hover:text-white shadow-md shadow-accent/5">
+                  <Palette className="w-5 sm:w-6 h-5 sm:h-6 text-accent group-hover:text-white transition-colors" />
                 </div>
-                <h4 className={cn("font-bold mb-2 text-base sm:text-lg md:text-xl", darkMode ? "text-white" : "text-slate-900")}>UI/UX Strategy</h4>
-                <p className={cn("text-xs sm:text-sm leading-relaxed", darkMode ? "text-slate-300" : "text-slate-500")}>Designing intuitive interfaces that drive engagement and conversion.</p>
+                <h4 className={cn("font-bold mb-1.5 text-sm sm:text-base md:text-lg", darkMode ? "text-white" : "text-slate-900")}>UI/UX Strategy</h4>
+                <p className={cn("text-[11px] sm:text-xs leading-relaxed", darkMode ? "text-slate-300" : "text-slate-500")}>Designing intuitive interfaces that drive engagement and conversion.</p>
               </motion.div>
             </div>
             
@@ -1039,7 +1042,7 @@ export default function App() {
 
       {/* Skills Section */}
       <section id="skills" className={cn(
-        "py-12 lg:py-32 px-6 sm:px-12 md:px-20 min-h-fit lg:min-h-screen flex items-center transition-colors duration-500 relative overflow-hidden z-10 border-b",
+        "pt-8 pb-12 lg:py-20 px-6 sm:px-12 md:px-20 min-h-fit lg:min-h-screen flex items-center transition-colors duration-500 relative overflow-hidden z-10 border-b",
         darkMode ? "bg-white/[0.02] border-white/5" : "bg-white/60 border-slate-200/50"
       )}>
         <div className="absolute top-0 right-0 w-48 sm:w-64 h-48 sm:h-64 bg-brand/5 rounded-full blur-3xl -z-10" />
@@ -1114,7 +1117,7 @@ export default function App() {
       )}>
         <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-brand/[0.02] rounded-full blur-[100px] opacity-40 -z-10" />
         <div className="absolute top-1/2 right-1/4 translate-x-1/2 -translate-y-1/2 w-full h-full bg-accent/[0.02] rounded-full blur-[100px] opacity-40 -z-10" />
-          <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 sm:gap-16 md:gap-20">
+          <div className="max-w-7xl mx-auto flex flex-col-reverse lg:grid lg:grid-cols-2 gap-12 sm:gap-16 md:gap-20">
             {/* Experience */}
             <div>
               <div className="flex items-center gap-3 sm:gap-4 mb-8 sm:mb-12 relative">
@@ -1298,7 +1301,7 @@ export default function App() {
 
       {/* Current Projects Section */}
       <section id="current-projects" className={cn(
-        "py-12 lg:py-32 px-6 sm:px-12 md:px-20 min-h-fit lg:min-h-screen flex items-center transition-colors duration-500 relative overflow-hidden z-10 border-b",
+        "pt-8 pb-12 lg:py-20 px-6 sm:px-12 md:px-20 min-h-fit lg:min-h-screen flex items-center transition-colors duration-500 relative overflow-hidden z-10 border-b",
         darkMode ? "bg-white/[0.02] border-white/5" : "bg-white/40 border-indigo-100/50"
       )}>
         <div className="max-w-7xl mx-auto">
@@ -1330,7 +1333,7 @@ export default function App() {
 
       {/* Projects Section */}
       <section id="projects" className={cn(
-        "py-12 lg:py-32 px-6 sm:px-12 md:px-20 min-h-fit lg:min-h-screen flex items-center transition-colors duration-500 relative overflow-hidden z-10 border-b",
+        "pt-8 pb-12 lg:py-20 px-6 sm:px-12 md:px-20 min-h-fit lg:min-h-screen flex items-center transition-colors duration-500 relative overflow-hidden z-10 border-b",
         darkMode ? "bg-white/[0.01] border-white/5" : "bg-white/40 border-indigo-100/50"
       )}>
         <div className="absolute top-1/4 left-0 w-48 sm:w-72 h-48 sm:h-72 bg-brand/5 rounded-full blur-2xl sm:blur-3xl -z-10" />
@@ -1353,7 +1356,7 @@ export default function App() {
                 }
               }
             }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5"
           >
             {portfolioData.projects.map((project, i) => (
               <ProjectCard key={project.title} project={project} index={i} darkMode={darkMode} />
@@ -1660,7 +1663,7 @@ export default function App() {
 
       {/* Philosophy Section */}
       <section className={cn(
-        "py-12 lg:py-32 px-6 sm:px-12 md:px-20 transition-colors duration-500 relative overflow-hidden z-10 border-b",
+        "py-8 lg:py-16 px-6 sm:px-12 md:px-20 transition-colors duration-500 relative overflow-hidden z-10 border-b",
         darkMode ? "bg-white/[0.01] border-white/5" : "bg-slate-50/30 border-indigo-50"
       )}>
         <div className="max-w-7xl mx-auto">
@@ -1670,7 +1673,7 @@ export default function App() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               className={cn(
-                "p-8 sm:p-12 rounded-[2.5rem] relative overflow-hidden group h-full flex flex-col justify-center",
+                "px-5 py-6 sm:px-8 sm:py-8 rounded-[2.5rem] relative overflow-hidden group flex flex-col justify-center",
                 "border-2 transition-all duration-500",
                 darkMode
                   ? "bg-white/[0.03] border-brand/40 shadow-[0_0_30px_rgba(99,102,241,0.25)] hover:shadow-[0_0_50px_rgba(99,102,241,0.45)] hover:border-brand/70"
@@ -1682,7 +1685,7 @@ export default function App() {
               <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-accent to-transparent animate-pulse" />
               <Quote className="absolute top-8 right-8 w-12 sm:w-16 h-12 sm:h-16 text-brand/10 group-hover:text-brand/30 transition-all duration-500 group-hover:scale-110" />
               <p className={cn(
-                "text-xl sm:text-2xl font-medium leading-relaxed italic mb-8 relative z-10",
+                "text-base sm:text-lg font-medium leading-relaxed italic mb-3 relative z-10 text-justify",
                 darkMode ? "text-slate-200" : "text-slate-700"
               )}>
                 "Success in web development is not just about writing code; it's about creating digital experiences that solve real problems and leave a lasting impression."
