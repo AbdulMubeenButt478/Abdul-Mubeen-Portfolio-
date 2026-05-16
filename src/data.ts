@@ -44,19 +44,19 @@ export const portfolioData = {
   ],
   education: [
     {
-      school: "University of Gujrat",
-      degree: "Bachelor of Science, BS Honors in Software Engineering",
-      period: "2021 - 2025"
+      school: "Govt. Islamia High School NO.2",
+      degree: "Matriculation: Biology",
+      period: "2014 - 2019"
     },
     {
       school: "Superior College",
-      degree: "Intermediate, Pre-Engineering",
+      degree: "Intermediate: Pre-Engineering",
       period: "2019 - 2021"
     },
     {
-      school: "Govt. Islamia High School NO.2",
-      degree: "Matriculation, Biology",
-      period: "2014 - 2019"
+      school: "University of Gujrat",
+      degree: "Bachelor of Science: BS Honors in Software Engineering",
+      period: "2021 - 2025"
     }
   ],
   projects: [

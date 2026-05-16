@@ -12,6 +12,7 @@ interface FlipFadeTextProps {
   letterDuration?: number
   staggerDelay?: number
   exitStaggerDelay?: number
+  hiddenWordsOnMobile?: string[]
 }
 
 const defaultWords = ["LOADING", "COMPUTING", "SEARCHING", "RETRIEVING", "ASSEMBLING"]
@@ -66,13 +67,15 @@ const Word = memo(function Word({
   staggerDelay, 
   exitStaggerDelay, 
   letterDuration,
-  textClassName
+  textClassName,
+  hiddenWordsOnMobile
 }: { 
   text: string
   staggerDelay: number
   exitStaggerDelay: number
   letterDuration: number
   textClassName?: string
+  hiddenWordsOnMobile?: string[]
 }) {
   const words = useMemo(() => text.split(" "), [text])
 
@@ -102,7 +105,7 @@ const Word = memo(function Word({
       }}
     >
       {words.map((word, wordIndex) => (
-        <span key={wordIndex} className="flex whitespace-nowrap">
+        <span key={wordIndex} className={cn("flex whitespace-nowrap", hiddenWordsOnMobile?.includes(word) ? "hidden sm:flex" : "")}>
           {word.split("").map((char, charIndex) => (
             <Letter 
               key={`${wordIndex}-${charIndex}`} 
@@ -124,6 +127,7 @@ export function FlipFadeText({
   letterDuration = 0.6,
   staggerDelay = 0,
   exitStaggerDelay = 0,
+  hiddenWordsOnMobile = [],
 }: FlipFadeTextProps) {
   const [index, setIndex] = useState(0)
 
@@ -149,6 +153,7 @@ export function FlipFadeText({
             exitStaggerDelay={exitStaggerDelay}
             letterDuration={letterDuration}
             textClassName={textClassName}
+            hiddenWordsOnMobile={hiddenWordsOnMobile}
           />
         </AnimatePresence>
       </div>

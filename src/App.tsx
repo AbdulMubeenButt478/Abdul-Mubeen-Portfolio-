@@ -76,7 +76,7 @@ const skillIconMap: Record<string, { icon: any, color: string, glow: string }> =
 };
 
 const SectionTitle = ({ children, subtitle, darkMode, className }: { children: React.ReactNode; subtitle?: string, darkMode?: boolean, className?: string }) => (
-  <div className={cn("mb-12 sm:mb-16 relative z-20", className)}>
+  <div className={cn("mb-8 sm:mb-12 relative z-20", className)}>
     <h2 
       className={cn(
         "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 transition-colors",
@@ -86,12 +86,12 @@ const SectionTitle = ({ children, subtitle, darkMode, className }: { children: R
       {children}
     </h2>
     <div 
-      className="h-1.5 w-20 bg-gradient-to-r from-brand to-accent mt-2 sm:mt-4 mb-4 sm:mb-6 rounded-full"
+      className="h-1.5 w-20 bg-gradient-to-r from-brand to-accent mt-1 sm:mt-2 mb-3 sm:mb-4 rounded-full"
     />
     {subtitle && (
       <p 
         className={cn(
-          "text-sm sm:text-base lg:text-lg w-full leading-relaxed mb-2 text-justify",
+          "text-sm sm:text-base lg:text-lg w-full leading-normal mb-1 text-justify [text-justify:inter-word] transition-colors",
           darkMode ? "text-slate-400" : "text-slate-500"
         )}
       >
@@ -746,13 +746,11 @@ export default function App() {
                 visible: { opacity: 1, y: 0 }
               }}
               className={cn(
-                "text-base sm:text-lg md:text-xl max-w-2xl mt-2 sm:mt-3 mb-6 sm:mb-8 leading-relaxed text-justify transition-colors",
+                "text-base sm:text-lg md:text-xl max-w-2xl mt-1 sm:mt-2 mb-4 sm:mb-6 leading-normal text-justify [text-justify:inter-word] transition-colors",
                 darkMode ? "text-slate-400" : "text-slate-600"
               )}
             >
-              Hi, I'm <span className={darkMode ? "text-white font-semibold" : "text-slate-900 font-semibold"}>{portfolioData.name}</span>. 
-              A <span className="text-brand font-bold">Software Engineer</span> & <span className="text-brand font-bold">Web Manager</span>. 
-              I specialize in optimizing digital performance and engineering strategic solutions.
+              Hi, I'm <span className={darkMode ? "text-white font-semibold" : "text-slate-900 font-semibold"}>{portfolioData.name}</span>, a dedicated <span className="text-brand font-bold">Software Engineer</span> & <span className="text-brand font-bold">Web Manager</span>. I specialize in optimizing high-performance digital systems and engineering strategic, user-focused web solutions.
             </motion.p>
             
             <motion.div 
@@ -906,18 +904,18 @@ export default function App() {
         darkMode ? "bg-white/[0.01] border-white/5" : "bg-slate-50/30 border-indigo-50"
       )}>
         <div className="absolute top-1/2 left-0 w-64 sm:w-80 h-64 sm:h-80 bg-brand/5 rounded-full blur-[100px] -z-10" />
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 lg:gap-24 gap-8 sm:gap-12 items-start">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 lg:gap-24 gap-8 sm:gap-12 items-stretch">
           <motion.div 
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="relative hidden lg:block"
+            className="relative hidden lg:block h-full"
           >
             <motion.div 
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
               className={cn(
-                "aspect-[4/5] rounded-2xl sm:rounded-3xl overflow-hidden border shadow-xl sm:shadow-2xl flex items-center justify-center group relative z-10",
+                "h-full rounded-2xl sm:rounded-3xl overflow-hidden border shadow-xl sm:shadow-2xl flex items-center justify-center group relative z-10",
                 darkMode 
                   ? "bg-white/[0.02] border-white/10 shadow-[0_0_30px_rgba(37,99,235,0.1)]" 
                   : "bg-slate-50 border-slate-200 shadow-slate-200/50"
@@ -962,7 +960,7 @@ export default function App() {
             <SectionTitle 
               subtitle="I am a Software Engineer and Web Manager focused on building high-performance websites and strategic digital solutions." 
               darkMode={darkMode}
-              className="mb-6 sm:mb-8"
+              className="mb-4 sm:mb-6"
             >
               ABOUT ME
             </SectionTitle>
@@ -973,14 +971,26 @@ export default function App() {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
               className={cn(
-                "text-sm sm:text-base leading-relaxed mb-6 sm:mb-8 text-justify transition-colors",
+                "text-sm sm:text-base leading-normal mb-4 sm:mb-5 text-justify [text-justify:inter-word] transition-colors",
                 darkMode ? "text-slate-400" : "text-slate-600"
               )}
             >
               {portfolioData.summary}
             </motion.p>
+
+            {/* Decorative Divider */}
+            <motion.div 
+              initial={{ opacity: 0, scaleX: 0 }}
+              whileInView={{ opacity: 1, scaleX: 1 }}
+              viewport={{ once: true }}
+              className="flex items-center gap-4 my-4 sm:my-6"
+            >
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent to-brand/20" />
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-brand/50 whitespace-nowrap">Core Expertise</span>
+              <div className="h-px flex-1 bg-gradient-to-l from-transparent to-brand/20" />
+            </motion.div>
             
-            <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 mt-4">
+            <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 mt-2">
               <motion.div 
                 whileHover={{ y: -6, scale: 1.01 }}
                 className={cn(
@@ -1371,16 +1381,21 @@ export default function App() {
         darkMode ? "bg-white/[0.02] backdrop-blur-2xl border-white/5 hover:border-brand/30 shadow-[0_0_30px_rgba(37,99,235,0.03)] hover:shadow-[0_0_40px_rgba(37,99,235,0.1)] rounded-[2.5rem] transition-all duration-500" : "bg-white/40 backdrop-blur-3xl border-indigo-100/50 rounded-[3rem] shadow-[0_20px_50px_rgba(79,70,229,0.05)] transition-all duration-500"
       )}>
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className={cn(
-              "p-8 sm:p-12 rounded-[3rem] border relative overflow-hidden",
-              darkMode ? "bg-white/[0.02] border-white/10" : "bg-slate-50 border-slate-100"
-            )}
-          >
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand via-accent to-brand" />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className={cn(
+                "p-8 sm:p-12 rounded-[3rem] relative overflow-hidden group",
+                "border-2 transition-all duration-500 shadow-2xl",
+                darkMode
+                  ? "bg-white/[0.03] border-brand/40 shadow-[0_0_30px_rgba(99,102,241,0.25)] hover:shadow-[0_0_50px_rgba(99,102,241,0.45)] hover:border-brand/70"
+                  : "bg-white border-brand/30 shadow-[0_0_25px_rgba(99,102,241,0.15)] hover:shadow-[0_0_45px_rgba(99,102,241,0.3)] hover:border-brand/60"
+              )}
+            >
+              {/* Animated top & bottom glow bars */}
+              <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-brand to-transparent animate-pulse" />
+              <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-accent to-transparent animate-pulse" />
             <h2 className={cn("text-4xl md:text-5xl font-bold mb-6", darkMode ? "text-white" : "text-slate-900")}>Let's Work Together</h2>
             <p className={cn("text-lg mb-10 max-w-2xl mx-auto text-justify sm:text-center", darkMode ? "text-slate-400" : "text-slate-600")}>
               Ready to take your digital presence to the next level? I'm currently available for freelance projects and full-time opportunities.
@@ -1667,13 +1682,22 @@ export default function App() {
         darkMode ? "bg-white/[0.01] border-white/5" : "bg-slate-50/30 border-indigo-50"
       )}>
         <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <SectionTitle 
+            subtitle="My philosophy is simple: keep it clean, make it fast, and focus on the user. Every pixel serves a purpose, and every line of code adds value."
+            darkMode={darkMode}
+            className="text-center flex flex-col items-center mb-10 sm:mb-16"
+          >
+            CORE PRINCIPLES
+          </SectionTitle>
+
+          <div className="grid lg:grid-cols-2 gap-10 sm:gap-16 items-center">
+            {/* Left Column: Philosophy Card */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               className={cn(
-                "px-5 py-6 sm:px-8 sm:py-8 rounded-[2.5rem] relative overflow-hidden group flex flex-col justify-center",
+                "px-5 py-6 sm:px-8 sm:py-8 rounded-[2.5rem] relative overflow-hidden group flex flex-col justify-center h-full",
                 "border-2 transition-all duration-500",
                 darkMode
                   ? "bg-white/[0.03] border-brand/40 shadow-[0_0_30px_rgba(99,102,241,0.25)] hover:shadow-[0_0_50px_rgba(99,102,241,0.45)] hover:border-brand/70"
@@ -1707,49 +1731,41 @@ export default function App() {
               </div>
             </motion.div>
 
-            <div className="space-y-6 sm:space-y-8">
-              <SectionTitle 
-                subtitle="My philosophy is simple: keep it clean, make it fast, and focus on the user. Every pixel serves a purpose, and every line of code adds value."
-                darkMode={darkMode}
-                className="mb-0"
-              >
-                CORE PRINCIPLES
-              </SectionTitle>
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  { label: "Clean Code", icon: Code2, glow: "rgba(99,102,241,0.35)", hoverGlow: "rgba(99,102,241,0.6)" },
-                  { label: "User Centric", icon: User, glow: "rgba(16,185,129,0.3)", hoverGlow: "rgba(16,185,129,0.55)" },
-                  { label: "High Speed", icon: Cpu, glow: "rgba(245,158,11,0.3)", hoverGlow: "rgba(245,158,11,0.55)" },
-                  { label: "Responsive", icon: Smartphone, glow: "rgba(99,102,241,0.3)", hoverGlow: "rgba(99,102,241,0.55)" }
-                ].map((item, i) => (
-                  <motion.div
-                    key={i}
-                    whileHover={{ y: -5, scale: 1.05 }}
-                    className={cn(
-                      "p-4 sm:p-6 rounded-2xl border-2 flex flex-col items-center justify-center gap-3 text-center transition-all duration-300 relative overflow-hidden group",
-                      darkMode
-                        ? "bg-white/[0.03] border-brand/30 hover:border-brand/60"
-                        : "bg-white border-brand/20 hover:border-brand/50 shadow-sm"
-                    )}
-                    style={{
-                      boxShadow: `0 0 18px ${item.glow}`,
-                    }}
-                    onHoverStart={(e) => {
-                      (e.target as HTMLElement).style.boxShadow = `0 0 35px ${item.hoverGlow}`;
-                    }}
-                    onHoverEnd={(e) => {
-                      (e.target as HTMLElement).style.boxShadow = `0 0 18px ${item.glow}`;
-                    }}
-                  >
-                    {/* Animated top glow line */}
-                    <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-brand to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
-                    <item.icon className="w-6 sm:w-8 h-6 sm:h-8 text-brand group-hover:scale-110 transition-transform duration-300" />
-                    <span className={cn("text-xs sm:text-sm font-bold uppercase tracking-widest", darkMode ? "text-slate-300" : "text-slate-700")}>
-                      {item.label}
-                    </span>
-                  </motion.div>
-                ))}
-              </div>
+            {/* Right Column: 4 Principle Cards */}
+            <div className="grid grid-cols-2 gap-4 h-full">
+              {[
+                { label: "Clean Code", icon: Code2, glow: "rgba(99,102,241,0.35)", hoverGlow: "rgba(99,102,241,0.6)" },
+                { label: "User Centric", icon: User, glow: "rgba(16,185,129,0.3)", hoverGlow: "rgba(16,185,129,0.55)" },
+                { label: "High Speed", icon: Cpu, glow: "rgba(245,158,11,0.3)", hoverGlow: "rgba(245,158,11,0.55)" },
+                { label: "Responsive", icon: Smartphone, glow: "rgba(99,102,241,0.3)", hoverGlow: "rgba(99,102,241,0.55)" }
+              ].map((item, i) => (
+                <motion.div
+                  key={i}
+                  whileHover={{ y: -5, scale: 1.05 }}
+                  className={cn(
+                    "p-3 sm:p-5 rounded-2xl border-2 flex flex-col items-center justify-center gap-2 text-center transition-all duration-300 relative overflow-hidden group",
+                    darkMode
+                      ? "bg-white/[0.03] border-brand/30 hover:border-brand/60"
+                      : "bg-white border-brand/20 hover:border-brand/50 shadow-sm"
+                  )}
+                  style={{
+                    boxShadow: `0 0 18px ${item.glow}`,
+                  }}
+                  onHoverStart={(e) => {
+                    (e.target as HTMLElement).style.boxShadow = `0 0 35px ${item.hoverGlow}`;
+                  }}
+                  onHoverEnd={(e) => {
+                    (e.target as HTMLElement).style.boxShadow = `0 0 18px ${item.glow}`;
+                  }}
+                >
+                  {/* Animated top glow line */}
+                  <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-brand to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
+                  <item.icon className="w-6 sm:w-8 h-6 sm:h-8 text-brand group-hover:scale-110 transition-transform duration-300" />
+                  <span className={cn("text-xs sm:text-sm font-bold uppercase tracking-widest", darkMode ? "text-slate-300" : "text-slate-700")}>
+                    {item.label}
+                  </span>
+                </motion.div>
+              ))}
             </div>
           </div>
         </div>
