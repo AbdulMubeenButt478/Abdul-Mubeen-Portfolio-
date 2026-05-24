@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'motion/react';
 import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
@@ -720,6 +720,7 @@ export default function App() {
                   "Digital Strategist", 
                   "Web Performance Expert"
                 ]} 
+                hiddenWordsOnMobile={["Solutions"]}
                 interval={3500}
                 className="min-h-0"
                 textClassName="text-[9px] min-[375px]:text-[10px] sm:text-xs font-bold text-brand"
@@ -958,25 +959,42 @@ export default function App() {
           
           <div className="lg:mt-0 flex flex-col">
             <SectionTitle 
-              subtitle="I am a Software Engineer and Web Manager focused on building high-performance websites and strategic digital solutions." 
               darkMode={darkMode}
               className="mb-4 sm:mb-6"
             >
               ABOUT ME
             </SectionTitle>
             
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className={cn(
-                "text-sm sm:text-base leading-normal mb-4 sm:mb-5 text-justify [text-justify:inter-word] transition-colors",
-                darkMode ? "text-slate-400" : "text-slate-600"
-              )}
-            >
-              {portfolioData.summary}
-            </motion.p>
+            {Array.isArray(portfolioData.summary) ? (
+              portfolioData.summary.map((para, i) => (
+                <motion.p 
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.2 + i * 0.1 }}
+                  className={cn(
+                    "text-sm sm:text-base leading-relaxed mb-4 text-justify transition-colors",
+                    darkMode ? "text-slate-400" : "text-slate-600"
+                  )}
+                >
+                  {para}
+                </motion.p>
+              ))
+            ) : (
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className={cn(
+                  "text-sm sm:text-base leading-normal mb-4 sm:mb-5 text-justify [text-justify:inter-word] transition-colors",
+                  darkMode ? "text-slate-400" : "text-slate-600"
+                )}
+              >
+                {portfolioData.summary}
+              </motion.p>
+            )}
 
             {/* Decorative Divider */}
             <motion.div 

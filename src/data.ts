@@ -15,7 +15,10 @@ export const portfolioData = {
   profileImage: photo,
   linkedin: "https://www.linkedin.com/in/abdul-mubeen",
   github: "https://github.com/AbdulMubeenButt478",
-  summary: "I am a Software Engineering graduate who is passionate about building fast and easy-to-use websites. Currently, I work as a Web Manager at NetsTech Software Solutions (Pvt) Ltd. I help bridge the gap between technical engineering and great user experiences. My expertise includes making websites faster, managing web content, and using modern technologies to create professional digital products.",
+  summary: [
+    "I am a Software Engineering graduate who is passionate about building fast, responsive, and easy-to-use websites. Currently, I work as a Web Manager at NetsTech Software Solutions (Pvt) Ltd, where I help bridge the gap between technical engineering and great user experiences.",
+    "My expertise includes making websites faster, managing web content, and using modern technologies to create professional digital products. I am dedicated to continuous learning and optimizing digital solutions to drive business success."
+  ],
   skills: [
     { name: "HTML5", category: "Frontend" },
     { name: "CSS3", category: "Frontend" },
