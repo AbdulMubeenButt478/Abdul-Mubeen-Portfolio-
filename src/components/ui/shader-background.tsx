@@ -80,7 +80,7 @@ const ShaderBackground = ({ darkMode = true }: { darkMode?: boolean }) => {
       vec4 lines = vec4(0.0);
       
       // Theme aware colors
-      vec4 bgColor = iDarkMode ? vec4(0.058, 0.09, 0.16, 1.0) : vec4(0.96, 0.97, 0.99, 1.0);
+      vec4 bgColor = iDarkMode ? vec4(0.058, 0.09, 0.16, 1.0) : vec4(0.961, 0.980, 0.976, 1.0);
       vec4 lineColor = iDarkMode ? vec4(0.39, 0.4, 0.95, 0.8) : vec4(0.39, 0.4, 0.95, 0.2);
 
       for(int l = 0; l < linesPerGroup; l++) {

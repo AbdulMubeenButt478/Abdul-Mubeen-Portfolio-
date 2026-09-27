@@ -56,6 +56,7 @@ const Tab = ({
   href: string;
   onClick: (e: any) => void;
   darkMode: boolean;
+  key?: any;
 }) => {
   const ref = useRef<HTMLLIElement>(null);
   return (
