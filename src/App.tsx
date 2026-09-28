@@ -18,6 +18,7 @@ import {
   User,
   ChevronRight,
   ChevronUp,
+  ChevronDown,
   Download,
   Terminal,
   Cpu,
@@ -40,7 +41,13 @@ import {
   MapPin,
   Quote,
   Play,
-  ArrowUpRight
+  ArrowUpRight,
+  Building2,
+  Calendar,
+  Sparkles,
+  Zap,
+  Home,
+  Phone
 } from 'lucide-react';
 import { portfolioData } from './data';
 import { cn } from './lib/utils';
@@ -63,17 +70,17 @@ const GoogleIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const skillIconMap: Record<string, { icon: any, color: string, glow: string }> = {
-  "HTML5": { icon: Globe, color: "text-orange-500", glow: "group-hover:shadow-orange-500/20" },
-  "CSS3": { icon: Palette, color: "text-blue-500", glow: "group-hover:shadow-blue-500/20" },
-  "JavaScript": { icon: Code2, color: "text-yellow-500", glow: "group-hover:shadow-yellow-500/20" },
-  "React": { icon: Layers, color: "text-cyan-400", glow: "group-hover:shadow-cyan-400/20" },
-  "Tailwind CSS": { icon: Layout, color: "text-sky-400", glow: "group-hover:shadow-sky-400/20" },
-  "Git & GitHub": { icon: Github, color: "text-slate-600", glow: "group-hover:shadow-slate-600/20" },
-  "SEO Optimization": { icon: Search, color: "text-emerald-500", glow: "group-hover:shadow-emerald-500/20" },
-  "UI/UX Design": { icon: Monitor, color: "text-purple-500", glow: "group-hover:shadow-purple-500/20" },
-  "Web Management": { icon: Settings, color: "text-[#5a968f]", glow: "group-hover:shadow-[#5a968f]/10" },
-  "CMS Management": { icon: Database, color: "text-[#4a827b]", glow: "group-hover:shadow-[#4a827b]/10" }
+const skillIconMap: Record<string, { icon: any, level: number, highlight: string, group: 'Frontend' | 'Tools' | 'Optimization' }> = {
+  "HTML5": { icon: Globe, level: 95, highlight: "Semantic Structure & Accessibility", group: "Frontend" },
+  "CSS3": { icon: Palette, level: 92, highlight: "Modern Layouts, Animations & Responsive", group: "Frontend" },
+  "JavaScript": { icon: Code2, level: 90, highlight: "ES6+, Async, APIs & DOM Dynamics", group: "Frontend" },
+  "React": { icon: Layers, level: 88, highlight: "SPA Architecture, Hooks & Component Flow", group: "Frontend" },
+  "Tailwind CSS": { icon: Layout, level: 95, highlight: "Rapid Utility Styling & Modern Design", group: "Frontend" },
+  "Git & GitHub": { icon: Github, level: 90, highlight: "Version Control, Branching & Collab", group: "Tools" },
+  "SEO Optimization": { icon: Search, level: 94, highlight: "Core Web Vitals, Audits & Indexing", group: "Optimization" },
+  "UI/UX Design": { icon: Monitor, level: 88, highlight: "User Experience, Layouts & Visual Flow", group: "Optimization" },
+  "Web Management": { icon: Settings, level: 94, highlight: "Website Health, Speed & Maintenance", group: "Optimization" },
+  "CMS Management": { icon: Database, level: 88, highlight: "Content Workflows, Publishing & Setup", group: "Tools" }
 };
 
 const SectionTitle = ({ children, subtitle, darkMode, className }: { children: React.ReactNode; subtitle?: string, darkMode?: boolean, className?: string }) => (
@@ -214,6 +221,29 @@ const ProjectCard = ({ project, index, isCurrent, darkMode }: { project: any, in
     );
   }
 
+  if (isCurrent) {
+    return (
+      <motion.a
+        href={project.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        variants={{
+          hidden: { opacity: 0, y: 30 },
+          visible: { opacity: 1, y: 0 }
+        }}
+        whileHover={{ y: -10 }}
+        className={cn(
+          "group relative overflow-hidden rounded-[24px] transition-all duration-500 hover:shadow-2xl shadow-sm flex flex-col h-full border block",
+          darkMode
+            ? "bg-white/[0.04] backdrop-blur-xl border-[#5a968f]/30 hover:border-[#5a968f] cursor-pointer shadow-xl shadow-[#5a968f]/20"
+            : "bg-white backdrop-blur-lg border border-[#5a968f]/20 hover:border-[#5a968f] cursor-pointer shadow-[0_20px_50px_rgba(90,150,143,0.1)] transition-all duration-500"
+        )}
+      >
+        {CardContent}
+      </motion.a>
+    );
+  }
+
   return (
     <motion.div
       variants={{
@@ -224,14 +254,9 @@ const ProjectCard = ({ project, index, isCurrent, darkMode }: { project: any, in
       className={cn(
         "group relative overflow-hidden rounded-[24px] transition-all duration-500 hover:shadow-2xl shadow-sm flex flex-col h-full border",
         darkMode
-          ? isCurrent
-            ? "bg-white/[0.04] backdrop-blur-xl border-[#5a968f]/30 hover:border-[#5a968f] cursor-pointer shadow-xl shadow-[#5a968f]/20"
-            : "bg-white/[0.02] backdrop-blur-xl border-white/10 hover:bg-white/[0.05] hover:border-[#5a968f]/50 hover:shadow-[0_0_40px_rgba(90,150,143,0.2)]"
-          : isCurrent
-            ? "bg-white backdrop-blur-lg border border-[#5a968f]/20 hover:border-[#5a968f] cursor-pointer shadow-[0_20px_50px_rgba(90,150,143,0.1)] transition-all duration-500"
-            : "bg-white/80 backdrop-blur-2xl border-slate-200/60 hover:bg-white hover:border-[#5a968f]/40 shadow-[0_8px_30px_rgba(15,23,42,0.04)] hover:shadow-[0_20px_40px_rgba(15,23,42,0.08)] transition-all duration-500"
+          ? "bg-white/[0.02] backdrop-blur-xl border-white/10 hover:bg-white/[0.05] hover:border-[#5a968f]/50 hover:shadow-[0_0_40px_rgba(90,150,143,0.2)]"
+          : "bg-white/80 backdrop-blur-2xl border-slate-200/60 hover:bg-white hover:border-[#5a968f]/40 shadow-[0_8px_30px_rgba(15,23,42,0.04)] hover:shadow-[0_20px_40px_rgba(15,23,42,0.08)] transition-all duration-500"
       )}
-      onClick={() => isCurrent && window.open(project.link, '_blank')}
     >
       {CardContent}
     </motion.div>
@@ -240,11 +265,14 @@ const ProjectCard = ({ project, index, isCurrent, darkMode }: { project: any, in
 
 export default function App() {
   const containerRef = useRef(null);
+  const lenisRef = useRef<Lenis | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
+  const [formFeedback, setFormFeedback] = useState<string | null>(null);
   const [darkMode, setDarkMode] = useState(true);
   const [showContactForm, setShowContactForm] = useState(false);
   const [activeLink, setActiveLink] = useState<string>('#top');
+  const [skillFilter, setSkillFilter] = useState<'All' | 'Frontend' | 'Tools' | 'Optimization'>('All');
 
   const [scrollTarget, setScrollTarget] = useState<'top' | 'bottom'>('bottom');
 
@@ -256,28 +284,36 @@ export default function App() {
   });
 
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 0.9,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 2,
-      syncTouch: true,
-    });
+    try {
+      const lenis = new Lenis({
+        duration: 0.9,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 2,
+        syncTouch: true,
+      });
+      lenisRef.current = lenis;
 
-    let running = true;
-    function raf(time: number) {
-      if (!running) return;
-      lenis.raf(time);
+      let running = true;
+      function raf(time: number) {
+        if (!running) return;
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+
       requestAnimationFrame(raf);
+
+      return () => {
+        running = false;
+        try {
+          lenis.destroy();
+        } catch (_) {}
+        lenisRef.current = null;
+      };
+    } catch (e) {
+      console.warn('Lenis could not be initialized:', e);
     }
-
-    requestAnimationFrame(raf);
-
-    return () => {
-      running = false;
-      lenis.destroy();
-    };
   }, []);
 
 
@@ -286,16 +322,20 @@ export default function App() {
     const id = href.replace('#', '');
     const element = document.getElementById(id);
     if (element) {
-      const offset = 80;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
+      if (lenisRef.current) {
+        lenisRef.current.scrollTo(element, { offset: -80, duration: 1 });
+      } else {
+        const offset = 80;
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = element.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition - offset;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
 
       setIsMenuOpen(false);
     }
@@ -326,9 +366,17 @@ export default function App() {
 
   const handleScrollAction = () => {
     if (scrollTarget === 'bottom') {
-      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      if (lenisRef.current) {
+        lenisRef.current.scrollTo(document.body.scrollHeight, { duration: 1.2 });
+      } else {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      }
     } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (lenisRef.current) {
+        lenisRef.current.scrollTo(0, { duration: 1.2 });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     }
   };
 
@@ -357,6 +405,7 @@ export default function App() {
 
       if (response.ok && result.success === 'true') {
         setFormStatus('sent');
+        setFormFeedback(null);
         setTimeout(() => setFormStatus('idle'), 5000);
         (e.target as HTMLFormElement).reset();
       } else {
@@ -369,9 +418,9 @@ export default function App() {
       const errorMessage = error instanceof Error ? error.message : String(error);
 
       if (errorMessage.includes('Activation')) {
-        alert('Action Required: Please check your email (mubeenbutt375@gmail.com) and click the "Activate Form" link to start receiving messages. This is a one-time security step.');
+        setFormFeedback('Action Required: Please check your email (mubeenbutt375@gmail.com) and click the "Activate Form" link to start receiving messages. This is a one-time security step.');
       } else {
-        alert('Something went wrong. Please try again later.');
+        setFormFeedback('Something went wrong sending your message. Please try again or reach out directly via WhatsApp or email.');
       }
     }
   };
@@ -614,9 +663,9 @@ export default function App() {
             >
               I'm{' '}
               <span className="text-[#faab19] relative inline-block underline decoration-[#faab19] decoration-[3px] sm:decoration-4 underline-offset-8 sm:underline-offset-[10px]">
-                {portfolioData.name}
+                {portfolioData.name}.
               </span>
-              ,<br />
+              <br />
               Front-End Developer<br />
               Based in Pakistan.
             </motion.h1>
@@ -759,15 +808,20 @@ export default function App() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className={cn(
-        "py-12 sm:py-16 px-6 sm:px-12 md:px-20 transition-all duration-700 relative overflow-hidden z-10 border-y",
-        darkMode ? "bg-[#0f172a]/80 border-white/5" : "bg-white/40 border-indigo-100/50 shadow-sm"
-      )}>
+      {/* Key Metrics / Stats Section - White Section Background & Brand Green (#344d36) Cards */}
+      <section 
+        className="py-12 sm:py-16 px-6 sm:px-12 md:px-20 transition-all duration-700 relative overflow-hidden z-10 border-y border-slate-200/80 bg-white"
+        style={{ background: '#ffffff' }}
+      >
         <div className="max-w-7xl mx-auto">
           <div className="mb-8 sm:mb-12">
-            <h2 className={cn("text-xl sm:text-2xl font-bold mb-2", darkMode ? "text-white" : "text-slate-900")}>KEY METRICS</h2>
-            <div className="h-1 w-20 bg-gradient-to-r from-brand to-accent rounded-full shadow-[0_0_10px_rgba(37,99,235,0.5)]" />
+            <div className="flex items-center gap-2 mb-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#faab19] animate-pulse" />
+              <h2 className="text-xl sm:text-2xl font-black tracking-wider uppercase text-[#344d36]">
+                Key Metrics
+              </h2>
+            </div>
+            <div className="h-1.5 w-24 bg-gradient-to-r from-[#faab19] to-[#344d36] rounded-full shadow-[0_0_12px_rgba(250,171,25,0.35)]" />
           </div>
 
           <motion.div
@@ -780,22 +834,19 @@ export default function App() {
                 opacity: 1,
                 y: 0,
                 transition: {
-                  staggerChildren: 0.2,
+                  staggerChildren: 0.15,
                   duration: 0.8,
                   ease: [0.16, 1, 0.3, 1]
                 }
               }
             }}
-            className={cn(
-              "grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 p-6 sm:p-10 md:p-16 rounded-2xl sm:rounded-3xl md:rounded-[40px] border transition-all",
-              darkMode ? "bg-white/[0.02] backdrop-blur-xl border-white/10" : "bg-white/40 backdrop-blur-md border-indigo-100/60 shadow-inner"
-            )}
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 p-5 sm:p-7 md:p-10 rounded-2xl sm:rounded-3xl md:rounded-[36px] bg-amber-50/20 border-2 border-[#faab19] shadow-xl shadow-[#faab19]/10"
           >
             {[
-              { label: "Years Experience", value: "1+" },
-              { label: "Projects Completed", value: "15+" },
-              { label: "Web Performance", value: "99%" },
-              { label: "Certifications", value: "10+" }
+              { label: "Years Experience", value: "1+", badge: "Active" },
+              { label: "Projects Completed", value: "15+", badge: "Delivered" },
+              { label: "Web Performance", value: "99%", badge: "Optimized" },
+              { label: "Certifications", value: "10+", badge: "Verified" }
             ].map((stat, i) => (
               <motion.div
                 key={i}
@@ -803,78 +854,156 @@ export default function App() {
                   hidden: { opacity: 0, scale: 0.9 },
                   visible: { opacity: 1, scale: 1 }
                 }}
-                className={cn(
-                  "text-center p-4 sm:p-8 md:p-12 rounded-xl sm:rounded-2xl md:rounded-3xl border transition-all group hover:-translate-y-3 hover:shadow-2xl",
-                  darkMode
-                    ? "bg-white/[0.02] backdrop-blur-xl border-white/10 hover:bg-white/[0.05] hover:border-brand/50 hover:shadow-[0_0_30px_rgba(37,99,235,0.2)] transition-all"
-                    : "bg-white/60 backdrop-blur-xl border-indigo-100/40 hover:bg-white/80 hover:border-brand/50 shadow-lg shadow-indigo-200/10 transition-all duration-500"
-                )}
+                whileHover={{ y: -7, scale: 1.02 }}
+                className="relative text-center p-5 sm:p-8 md:p-10 rounded-xl sm:rounded-2xl md:rounded-3xl border-2 border-[#faab19] transition-all duration-300 group cursor-default overflow-hidden shadow-xl shadow-[#344d36]/15 hover:shadow-2xl hover:shadow-[#faab19]/35 hover:border-[#faab19]"
+                style={{ background: '#344d36' }}
               >
-                <h3 className="text-2xl sm:text-3xl md:text-5xl font-bold text-brand mb-2 group-hover:scale-110 transition-transform">{stat.value}</h3>
-                <p className="text-slate-500 text-[11px] sm:text-xs font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em]">{stat.label}</p>
+                {/* Subtle top golden indicator bar on hover */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-0 group-hover:w-20 h-1 bg-[#faab19] rounded-full transition-all duration-300" />
+
+                <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#faab19] mb-2 tracking-tight group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
+                  {stat.value}
+                </h3>
+                <p className="text-[11px] sm:text-xs font-extrabold uppercase tracking-[0.16em] sm:tracking-[0.2em] text-white transition-colors">
+                  {stat.label}
+                </p>
+                <div className="mt-3 flex justify-center">
+                  <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border bg-white/10 border-white/20 text-white/90 group-hover:bg-[#faab19]/20 group-hover:border-[#faab19]/60 group-hover:text-[#faab19] transition-all">
+                    {stat.badge}
+                  </span>
+                </div>
               </motion.div>
             ))}
           </motion.div>
         </div>
       </section>
 
-      {/* About Section — Reference-style redesign */}
+      {/* About Section — Reference-style redesign matching uploaded image */}
       <section id="about" className="py-16 lg:py-24 px-6 sm:px-12 md:px-20 overflow-hidden z-10 relative" style={{ background: '#344d36' }}>
 
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
-          {/* ── LEFT: Circular Photo + Overlaid Skill Tags ── */}
+          {/* ── LEFT: Circular Portrait + Overlaid Skill Badges matching user image ── */}
           <motion.div
-            initial={{ opacity: 0, x: -60 }}
+            initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="relative flex items-end justify-center"
-            style={{ minHeight: '420px' }}
+            className="relative flex items-center justify-center w-full py-4"
           >
-            {/* Yellow circle — sits at bottom, image overflows above */}
-            <div
-              className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[300px] h-[300px] sm:w-[360px] sm:h-[360px] rounded-full bg-[#faab19] shadow-2xl shadow-[#faab19]/30"
-            />
+            <div className="relative w-full max-w-[340px] sm:max-w-[420px] lg:max-w-[460px] aspect-square flex items-center justify-center">
 
-            {/* Profile image — overflows above the circle */}
-            <img
-              src={portfolioData.profileImage}
-              alt={portfolioData.name}
-              className="relative z-10 w-[280px] sm:w-[340px] object-cover object-top select-none pointer-events-none"
-              style={{ marginBottom: '-8px' }}
-            />
-
-            {/* Overlaid Skill Pills — on the lower half of the image like reference */}
-            {[
-              { label: 'UI/UX Design',      bottom: '34%', left: '54%',  delay: 0,    bg: '#faab19', text: '#1a1a1a', border: '#344d36' },
-              { label: 'Web Management',    bottom: '26%', left: '-2%',  delay: 0.25, bg: '#344d36', text: '#fff',    border: '#faab19' },
-              { label: 'Website Design',    bottom: '22%', left: '52%',  delay: 0.5,  bg: '#faab19', text: '#1a1a1a', border: '#344d36' },
-              { label: 'SEO Optimization',  bottom: '14%', left: '-6%',  delay: 0.75, bg: '#344d36', text: '#fff',    border: '#faab19' },
-              { label: 'Front-End Dev',     bottom: '10%', left: '50%',  delay: 1.0,  bg: '#faab19', text: '#1a1a1a', border: '#344d36' },
-              { label: 'CMS Management',    bottom: '2%',  left: '4%',   delay: 1.25, bg: '#344d36', text: '#fff',    border: '#faab19' },
-              { label: 'React & Tailwind',  bottom: '2%',  left: '52%',  delay: 1.5,  bg: '#faab19', text: '#1a1a1a', border: '#344d36' },
-            ].map((tag, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.7 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: tag.delay, duration: 0.4 }}
-                animate={{ y: [0, i % 2 === 0 ? -5 : 5, 0] }}
-                style={{
-                  position: 'absolute',
-                  bottom: tag.bottom,
-                  left: tag.left,
-                  background: tag.bg,
-                  color: tag.text,
-                  border: `1.5px solid ${tag.border}`,
-                }}
-                className="px-3 py-1.5 rounded-full text-xs font-bold shadow-lg whitespace-nowrap z-20 cursor-default select-none"
+              {/* Decorative background contour ripple line art (like the reference) */}
+              <svg 
+                className="absolute -top-8 -left-8 w-24 sm:w-32 h-24 sm:h-32 text-[#faab19] opacity-25 pointer-events-none"
+                viewBox="0 0 100 100" 
+                fill="none"
               >
-                {tag.label}
-              </motion.div>
-            ))}
+                <circle cx="20" cy="20" r="30" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" />
+                <circle cx="20" cy="20" r="50" stroke="currentColor" strokeWidth="1.5" />
+              </svg>
+              <svg 
+                className="absolute -bottom-8 -right-8 w-28 sm:w-36 h-28 sm:h-36 text-[#faab19] opacity-25 pointer-events-none"
+                viewBox="0 0 100 100" 
+                fill="none"
+              >
+                <circle cx="80" cy="80" r="35" stroke="currentColor" strokeWidth="1.5" strokeDasharray="5 5" />
+                <circle cx="80" cy="80" r="60" stroke="currentColor" strokeWidth="2" />
+              </svg>
+
+              {/* 1. Main Large Yellow Circle & Profile Photo Frame */}
+              <div className="relative w-[300px] h-[300px] sm:w-[380px] sm:h-[380px] lg:w-[420px] lg:h-[420px] flex items-center justify-center">
+                
+                {/* Yellow Circle with Overflow Hidden for the base photo */}
+                <div className="absolute inset-0 rounded-full bg-[#faab19] overflow-hidden shadow-2xl shadow-black/40 flex items-center justify-center border-4 border-white/20">
+                  {/* Subtle topographic / concentric ripple lines inside the yellow circle */}
+                  <svg 
+                    className="absolute inset-0 w-full h-full opacity-15 pointer-events-none" 
+                    viewBox="0 0 400 400" 
+                    fill="none"
+                  >
+                    <circle cx="200" cy="200" r="185" stroke="#000" strokeWidth="2.5" strokeDasharray="8 8" />
+                    <circle cx="200" cy="200" r="145" stroke="#000" strokeWidth="2" />
+                    <circle cx="200" cy="200" r="105" stroke="#000" strokeWidth="2" strokeDasharray="6 6" />
+                    <circle cx="330" cy="90" r="50" stroke="#000" strokeWidth="2" opacity="0.7" />
+                    <circle cx="70" cy="290" r="45" stroke="#000" strokeWidth="2" opacity="0.7" />
+                  </svg>
+
+                  {/* Profile Photo: Full head & hair completely visible with comfortable breathing room at top */}
+                  <img
+                    src={portfolioData.profileImage}
+                    alt={portfolioData.name}
+                    className="w-[94%] sm:w-[94%] h-[94%] sm:h-[94%] object-contain select-none pointer-events-none transform translate-y-2 sm:translate-y-3 drop-shadow-xl"
+                  />
+                </div>
+
+                {/* 2. Floating Overlaid Skill Pill Cluster (positioned on tie/lower suit chest, overlapping the bottom rim cleanly) */}
+                <div className="absolute inset-x-0 -bottom-4 sm:-bottom-5 z-20 flex flex-col items-center gap-1 sm:gap-1.5 px-2 pointer-events-auto">
+                  {/* Row 1: UX/UI Design (Top Centered - on tie knot/collar, clear of beard) */}
+                  <motion.div
+                    whileHover={{ scale: 1.08 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                    className="bg-[#faab19] text-slate-950 text-xs sm:text-sm font-extrabold px-5 sm:px-6 py-1 sm:py-1.5 rounded-full border-2 border-white shadow-xl shadow-black/30 tracking-wide select-none cursor-default"
+                  >
+                    UX/UI Design
+                  </motion.div>
+
+                  {/* Row 2: Mobile App Design (Left / Green) + Website Design (Right / Yellow) */}
+                  <div className="flex items-center justify-center gap-1.5 sm:gap-2.5 w-full -mt-0.5">
+                    <motion.div
+                      whileHover={{ scale: 1.08, rotate: -4 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                      className="bg-[#233a2d] text-white text-[11px] sm:text-xs font-bold px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full border-2 border-white shadow-xl shadow-black/30 -rotate-3 select-none cursor-default"
+                    >
+                      Mobile App Design
+                    </motion.div>
+                    <motion.div
+                      whileHover={{ scale: 1.08, rotate: 4 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                      className="bg-[#faab19] text-slate-950 text-[11px] sm:text-xs font-extrabold px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full border-2 border-white shadow-xl shadow-black/30 rotate-3 select-none cursor-default"
+                    >
+                      Website Design
+                    </motion.div>
+                  </div>
+
+                  {/* Row 3: Design System (Left / Yellow), Prototype (Center / Green), Dashboard (Right / Green) */}
+                  <div className="flex items-center justify-center gap-1 sm:gap-2 w-full -mt-0.5">
+                    <motion.div
+                      whileHover={{ scale: 1.08, rotate: -6 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                      className="bg-[#faab19] text-slate-950 text-[10px] sm:text-[11px] font-extrabold px-3 sm:px-3.5 py-1 rounded-full border-2 border-white shadow-xl shadow-black/30 -rotate-6 select-none cursor-default"
+                    >
+                      Design System
+                    </motion.div>
+                    <motion.div
+                      whileHover={{ scale: 1.08 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                      className="bg-[#233a2d] text-white text-[10px] sm:text-[11px] font-bold px-3 sm:px-3.5 py-1 rounded-full border-2 border-white shadow-xl shadow-black/30 select-none cursor-default"
+                    >
+                      Prototype
+                    </motion.div>
+                    <motion.div
+                      whileHover={{ scale: 1.08, rotate: 6 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                      className="bg-[#233a2d] text-white text-[10px] sm:text-[11px] font-bold px-3 sm:px-3.5 py-1 rounded-full border-2 border-white shadow-xl shadow-black/30 rotate-6 select-none cursor-default"
+                    >
+                      Dashboard
+                    </motion.div>
+                  </div>
+
+                  {/* Row 4: Wireframe Design (Bottom Centered - overlaps the bottom curve cleanly) */}
+                  <motion.div
+                    whileHover={{ scale: 1.08 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                    className="bg-[#faab19] text-slate-950 text-xs sm:text-sm font-extrabold px-5 sm:px-6 py-1 sm:py-1.5 rounded-full border-2 border-white shadow-xl shadow-black/30 -mt-0.5 select-none cursor-default"
+                  >
+                    Wireframe Design
+                  </motion.div>
+                </div>
+
+              </div>
+
+            </div>
           </motion.div>
 
           {/* ── RIGHT: Text Content ── */}
@@ -891,21 +1020,21 @@ export default function App() {
               <span className="text-[#faab19] text-sm font-semibold tracking-widest uppercase">About Me</span>
             </div>
 
-            {/* Heading */}
+            {/* Heading — Abdul Mubeen in yellow with a dot */}
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
-              Who is <span className="text-[#faab19] italic font-extrabold">Abdul Mubeen?</span>
+              Who is <span className="text-[#faab19] font-extrabold">Abdul Mubeen.</span>
             </h2>
 
-            {/* Summary paragraphs */}
+            {/* Summary paragraphs — Proper White Color */}
             <div className="mb-6 space-y-3">
               {Array.isArray(portfolioData.summary) ? (
                 portfolioData.summary.map((para, i) => (
-                  <p key={i} className="text-white/75 text-sm sm:text-base leading-relaxed">
+                  <p key={i} className="text-white text-base sm:text-lg leading-relaxed font-normal">
                     {para}
                   </p>
                 ))
               ) : (
-                <p className="text-white/75 text-sm sm:text-base leading-relaxed">{portfolioData.summary}</p>
+                <p className="text-white text-base sm:text-lg leading-relaxed font-normal">{portfolioData.summary}</p>
               )}
             </div>
 
@@ -925,12 +1054,12 @@ export default function App() {
                   className="flex flex-col"
                 >
                   <span className="text-3xl sm:text-4xl font-extrabold text-[#faab19] leading-none">{stat.value}</span>
-                  <span className="text-white/60 text-xs sm:text-sm mt-1 font-medium">{stat.label}</span>
+                  <span className="text-white text-xs sm:text-sm mt-1 font-medium">{stat.label}</span>
                 </motion.div>
               ))}
             </div>
 
-            {/* Download CV Button */}
+            {/* Download CV Button — Black text, no dot */}
             <div className="flex items-center gap-4 flex-wrap">
               <motion.a
                 href={portfolioData.cvLink}
@@ -938,22 +1067,22 @@ export default function App() {
                 download
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.97 }}
-                className="inline-flex items-center gap-3 bg-white rounded-full pl-6 pr-2 py-2 shadow-xl cursor-pointer group"
+                className="inline-flex items-center gap-3 bg-white hover:bg-slate-100 rounded-full pl-6 pr-2 py-2 shadow-xl cursor-pointer group transition-all"
               >
-                <span className="text-[#faab19] font-bold text-sm sm:text-base group-hover:text-[#344d36] transition-colors">
-                  Download CV <span className="text-[#344d36] group-hover:text-[#faab19] transition-colors">•</span>
+                <span className="text-black font-bold text-sm sm:text-base">
+                  Download CV
                 </span>
-                <span className="w-9 h-9 rounded-full bg-[#faab19] flex items-center justify-center shadow-md flex-shrink-0 group-hover:bg-[#344d36] transition-colors">
-                  <Download className="w-4 h-4 text-slate-900 group-hover:text-white transition-colors" />
+                <span className="w-9 h-9 rounded-full bg-[#faab19] flex items-center justify-center shadow-md flex-shrink-0 group-hover:bg-[#233a2d] transition-colors">
+                  <Download className="w-4 h-4 text-black group-hover:text-white transition-colors" />
                 </span>
               </motion.a>
 
               {/* Signature */}
               <span
-                className="text-white/40 italic font-bold text-xl tracking-wide hidden sm:inline"
+                className="text-[#faab19] italic font-bold text-xl tracking-wide hidden sm:inline"
                 style={{ fontFamily: 'cursive' }}
               >
-                Abdul Mubeen
+                Abdul Mubeen.
               </span>
             </div>
           </motion.div>
@@ -961,189 +1090,277 @@ export default function App() {
         </div>
       </section>
 
-      {/* Skills Section */}
-      <section id="skills" className={cn(
-        "pt-8 pb-12 lg:py-20 px-6 sm:px-12 md:px-20 min-h-fit lg:min-h-screen flex items-center transition-colors duration-500 relative overflow-hidden z-10 border-b",
-        darkMode ? "bg-white/[0.02] border-white/5" : "bg-white/60 border-slate-200/50"
-      )}>
-        <div className="absolute top-0 right-0 w-48 sm:w-64 h-48 sm:h-64 bg-brand/5 rounded-full blur-3xl -z-10" />
-        <div className="absolute bottom-0 left-0 w-64 sm:w-80 h-64 sm:h-80 bg-accent/5 rounded-full blur-3xl -z-10" />
+      {/* Technical Skills Section - Modern High-End UI with Brand Green (#344d36) & Yellow (#faab19) */}
+      <section 
+        id="skills" 
+        className="py-20 sm:py-28 px-6 sm:px-12 md:px-20 transition-colors duration-500 relative overflow-hidden z-10 border-b border-slate-200/80 bg-white"
+        style={{ background: '#ffffff' }}
+      >
+        {/* Ambient brand color glows */}
+        <div className="absolute top-1/4 left-10 w-96 h-96 bg-[#faab19]/5 rounded-full blur-[130px] pointer-events-none -z-10" />
+        <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-[#344d36]/5 rounded-full blur-[140px] pointer-events-none -z-10" />
+
         <div className="max-w-7xl mx-auto">
-          <SectionTitle subtitle="A strong set of skills built over many hours of hands-on work, including modern front-end frameworks, SEO techniques, and practical web management tools." darkMode={darkMode}>
-            TECHNICAL SKILLS
-          </SectionTitle>
+          {/* Main Section Header */}
+          <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+            {/* Top Tag: — Technical Arsenal */}
+            <div className="inline-flex items-center gap-2 mb-3">
+              <span className="w-5 h-[3px] bg-[#faab19] rounded-full inline-block" />
+              <span className="text-sm sm:text-base font-bold text-slate-800 tracking-wide uppercase">
+                Technical Arsenal
+              </span>
+            </div>
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: {
-                  staggerChildren: 0.1
-                }
-              }
-            }}
-            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6"
-          >
-            {portfolioData.skills.map((skill, i) => {
-              const skillInfo = skillIconMap[skill.name] || { icon: Code2, color: "text-slate-400", glow: "group-hover:shadow-slate-400/10" };
-              const Icon = skillInfo.icon;
-              let iconColor = skillInfo.color;
-              if (skill.name === "Git & GitHub" && darkMode) iconColor = "text-white";
+            {/* Main Title */}
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.15] mb-4">
+              <span className="font-black text-black">My Technical </span>
+              <span className="italic text-[#faab19] font-extrabold">Skills & Stack</span>
+            </h2>
 
-              const getCardStyle = () => {
-                return darkMode
-                  ? "bg-white/[0.02] border-white/5 hover:bg-white/[0.05]"
-                  : "bg-white border-slate-100 hover:border-brand/20 shadow-sm hover:shadow-xl hover:shadow-brand/5";
-              };
+            {/* Description under main heading: 16px font-size, 24px line-height, font-weight 500 */}
+            <p className="text-[16px] leading-[24px] font-[500] text-slate-700 max-w-2xl mx-auto">
+              A specialized set of frontend technologies, optimization tools, and web management expertise delivering fast, modern, and reliable digital experiences.
+            </p>
+          </div>
 
-              return (
-                <motion.div
-                  key={skill.name}
-                  variants={{
-                    hidden: { opacity: 0, y: 20 },
-                    visible: { opacity: 1, y: 0 }
-                  }}
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  className={cn(
-                    "p-4 sm:p-6 md:p-8 rounded-2xl text-center border transition-all group relative overflow-hidden",
-                    getCardStyle(),
-                    skillInfo.glow
-                  )}
-                >
-                  <div className={cn(
-                    "w-10 sm:w-12 h-10 sm:h-12 rounded-xl flex items-center justify-center mx-auto mb-3 sm:mb-4 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6",
-                    darkMode ? "bg-white/[0.05] border-white/10" : "bg-slate-50 border-slate-100",
-                    "border group-hover:border-transparent group-hover:bg-gradient-to-br group-hover:from-brand group-hover:to-accent shadow-sm group-hover:shadow-xl"
-                  )}>
-                    <Icon className={cn("w-5 sm:w-6 h-5 sm:h-6 transition-colors duration-300", iconColor)} />
-                  </div>
-                  <h4 className={cn("font-bold text-xs sm:text-sm uppercase tracking-widest mb-1", darkMode ? "text-white" : "text-slate-900")}>{skill.name}</h4>
-                  <div className="h-1 w-6 bg-slate-200/50 mx-auto rounded-full group-hover:w-10 group-hover:bg-gradient-to-r group-hover:from-brand group-hover:to-accent transition-all duration-300 mb-2" />
-                  <p className="text-[10px] sm:text-xs text-slate-500 font-bold uppercase tracking-tighter opacity-60">{skill.category}</p>
-                </motion.div>
-              );
-            })}
-          </motion.div>
+          {/* Interactive Category Filter Tabs */}
+          <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 mb-10 sm:mb-12">
+            {[
+              { id: 'All', label: 'All Technologies', count: portfolioData.skills.length },
+              { id: 'Frontend', label: 'Frontend Development', count: portfolioData.skills.filter(s => skillIconMap[s.name]?.group === 'Frontend').length },
+              { id: 'Tools', label: 'Tools & CMS', count: portfolioData.skills.filter(s => skillIconMap[s.name]?.group === 'Tools').length },
+              { id: 'Optimization', label: 'Optimization & Design', count: portfolioData.skills.filter(s => skillIconMap[s.name]?.group === 'Optimization').length }
+            ].map(tab => (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setSkillFilter(tab.id as any)}
+                className={cn(
+                  "px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-black transition-all duration-300 flex items-center gap-2 cursor-pointer",
+                  skillFilter === tab.id
+                    ? "bg-[#344d36] text-white border-2 border-[#344d36] shadow-lg shadow-[#344d36]/25 scale-105"
+                    : "bg-white hover:bg-[#344d36]/5 text-black border-2 border-[#344d36] shadow-xs"
+                )}
+              >
+                <span>{tab.label}</span>
+                <span className={cn(
+                  "text-[10px] px-2 py-0.5 rounded-full font-black",
+                  skillFilter === tab.id
+                    ? "bg-[#faab19] text-black"
+                    : "bg-[#344d36]/10 text-black"
+                )}>
+                  {tab.count}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          {/* Skills Cards Grid - Inactive state has green color border (#344d36) */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-5">
+            {portfolioData.skills
+              .filter(skill => {
+                if (skillFilter === 'All') return true;
+                const group = skillIconMap[skill.name]?.group;
+                return group === skillFilter;
+              })
+              .map(skill => {
+                const info = skillIconMap[skill.name] || {
+                  icon: Code2,
+                  level: 85,
+                  highlight: "Web Development Skill",
+                  group: "Frontend"
+                };
+                const Icon = info.icon;
+
+                return (
+                  <motion.div
+                    layout
+                    key={skill.name}
+                    initial={{ opacity: 0.85, scale: 0.98 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.2 }}
+                    whileHover={{ y: -5, scale: 1.02 }}
+                    className="relative p-5 sm:p-6 rounded-2xl border-2 border-[#344d36] hover:border-[#faab19] bg-white transition-all duration-300 group cursor-default overflow-hidden shadow-sm hover:shadow-xl hover:shadow-[#faab19]/20 flex flex-col items-center text-center justify-center gap-3"
+                  >
+                    {/* Top yellow-green accent line on hover */}
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#faab19] via-[#344d36] to-[#faab19] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                    {/* Compact Centered Brand Icon */}
+                    <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#344d36] border-2 border-[#faab19] flex items-center justify-center text-[#faab19] shadow-sm shadow-[#344d36]/20 mx-auto group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                      <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-[#faab19]" />
+                    </div>
+
+                    {/* Skill Name in Solid Black */}
+                    <h4 className="text-sm sm:text-base font-black text-black group-hover:text-[#344d36] transition-colors tracking-tight">
+                      {skill.name}
+                    </h4>
+
+                    {/* Category Pill Tag */}
+                    <span className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-slate-100 text-slate-800 border border-slate-200">
+                      {skill.category}
+                    </span>
+                  </motion.div>
+                );
+              })}
+          </div>
+
         </div>
       </section>
 
-      {/* Experience & Education */}
-      <section id="experience" className={cn(
-        "py-24 sm:py-32 px-6 sm:px-12 md:px-20 min-h-screen flex items-center transition-colors duration-500 relative overflow-hidden z-10 border-b",
-        darkMode ? "bg-white/[0.01] border-white/5" : "bg-white/40 border-indigo-100/50"
-      )}>
-        <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-brand/[0.02] rounded-full blur-[100px] opacity-40 -z-10" />
-        <div className="absolute top-1/2 right-1/4 translate-x-1/2 -translate-y-1/2 w-full h-full bg-accent/[0.02] rounded-full blur-[100px] opacity-40 -z-10" />
-        <div className="max-w-7xl mx-auto flex flex-col-reverse lg:grid lg:grid-cols-2 gap-12 sm:gap-16 md:gap-20">
-          {/* Experience */}
-          <div>
-            <div className="flex items-center gap-3 sm:gap-4 mb-8 sm:mb-12 relative">
-              <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-lg sm:rounded-2xl bg-brand/10 flex items-center justify-center">
-                <Briefcase className="w-5 sm:w-6 h-5 sm:h-6 text-brand" />
-              </div>
-              <h2 className={cn("text-2xl sm:text-3xl font-bold", darkMode ? "text-white" : "text-slate-900")}>Experience</h2>
-              <div className="absolute -bottom-4 left-0 h-1.5 w-20 bg-gradient-to-r from-brand to-accent rounded-full" />
+      {/* Experience & Education Section - Clean White Background with Custom Academic/Professional Journey Header */}
+      <section 
+        id="experience" 
+        className="py-20 sm:py-28 px-6 sm:px-12 md:px-20 transition-colors duration-500 relative overflow-hidden z-10 border-b border-slate-200/80 bg-white"
+        style={{ background: '#ffffff' }}
+      >
+        {/* Subtle ambient brand color glows */}
+        <div className="absolute top-1/4 left-10 w-96 h-96 bg-[#faab19]/5 rounded-full blur-[130px] pointer-events-none -z-10" />
+        <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-[#344d36]/5 rounded-full blur-[140px] pointer-events-none -z-10" />
+
+        <div className="max-w-7xl mx-auto">
+          {/* Main Section Header matching uploaded reference image */}
+          <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
+            {/* Top Tag: — Education & Work */}
+            <div className="inline-flex items-center gap-2 mb-3">
+              <span className="w-5 h-[3px] bg-[#faab19] rounded-full inline-block" />
+              <span className="text-sm sm:text-base font-bold text-slate-800 tracking-wide">
+                Education & Work
+              </span>
             </div>
 
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={{
-                hidden: { opacity: 0 },
-                visible: {
-                  opacity: 1,
-                  transition: {
-                    staggerChildren: 0.2
-                  }
-                }
-              }}
-              className={cn(
-                "space-y-6 sm:space-y-8 relative before:absolute before:left-[18px] sm:before:left-[23px] before:top-0 before:bottom-0 before:w-px",
-                darkMode ? "before:bg-slate-800" : "before:bg-slate-200"
-              )}
-            >
-              {portfolioData.experience.map((exp, i) => (
-                <motion.div
-                  key={i}
-                  variants={{
-                    hidden: { opacity: 0, x: -20 },
-                    visible: { opacity: 1, x: 0 }
-                  }}
-                  className="relative pl-12 sm:pl-16"
-                >
-                  <div className={cn("absolute left-0 top-0 w-9 sm:w-12 h-9 sm:h-12 rounded-full flex items-center justify-center z-10 border shadow-sm backdrop-blur-xl", darkMode ? "bg-slate-900/90 border-white/10" : "bg-white/90 border-slate-200")}>
-                    <div className="w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-brand" />
-                  </div>
-                  <div className={cn(
-                    "p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl border transition-all hover:border-brand/40",
-                    darkMode ? "bg-white/[0.02] backdrop-blur-xl border-white/10" : "bg-white/60 backdrop-blur-lg border-indigo-100 hover:bg-white/80 shadow-xl shadow-indigo-100/30"
-                  )}>
-                    <span className="text-brand text-sm sm:text-base md:text-lg font-bold uppercase tracking-widest mb-2 block">{exp.period}</span>
-                    <h3 className={cn("text-2xl sm:text-3xl font-bold mb-1", darkMode ? "text-white" : "text-slate-900")}>{exp.role}</h3>
-                    <p className="text-slate-500 font-bold mb-3 sm:mb-4 text-base sm:text-xl">{exp.company}</p>
-                    <p className={cn("text-sm sm:text-base md:text-lg leading-relaxed text-justify", darkMode ? "text-slate-400" : "text-slate-600")}>{exp.description}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-
-
+            {/* Main Title: My Academic and / Professional Journey */}
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.15]">
+              <span className="font-extrabold text-slate-950">My </span>
+              <span className="italic text-[#faab19] font-extrabold">Academic and</span>
+              <br />
+              <span className="italic text-[#faab19] font-extrabold">Professional </span>
+              <span className="font-extrabold text-slate-950">Journey</span>
+            </h2>
           </div>
-          {/* Education */}
-          <div>
-            <div className="flex items-center gap-3 sm:gap-4 mb-8 sm:mb-12 relative">
-              <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-lg sm:rounded-2xl bg-brand/10 flex items-center justify-center">
-                <GraduationCap className="w-5 sm:w-6 h-5 sm:h-6 text-brand" />
+
+          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 sm:gap-16 md:gap-20">
+            {/* 1. Experience Column */}
+            <div>
+              <div className="flex items-center gap-3 sm:gap-4 mb-8 sm:mb-12 relative">
+                <div className="w-12 h-12 rounded-2xl bg-[#344d36] border-2 border-[#faab19] flex items-center justify-center shadow-lg shadow-[#344d36]/20">
+                  <Briefcase className="w-6 h-6 text-[#faab19]" />
+                </div>
+                <div>
+                  <h3 className="text-2xl sm:text-3xl font-black text-[#1e2d20]">
+                    Experience
+                  </h3>
+                  <div className="h-1.5 w-20 bg-gradient-to-r from-[#faab19] to-[#344d36] rounded-full mt-1.5 shadow-[0_0_10px_rgba(250,171,25,0.4)]" />
+                </div>
               </div>
-              <h2 className={cn("text-2xl sm:text-3xl font-bold", darkMode ? "text-white" : "text-slate-900")}>Education</h2>
-              <div className="absolute -bottom-4 left-0 h-1.5 w-20 bg-gradient-to-r from-brand to-accent rounded-full" />
+
+              <div className="space-y-6 sm:space-y-8 relative before:absolute before:left-[19px] sm:before:left-[23px] before:top-4 before:bottom-4 before:w-[2px] before:bg-gradient-to-b before:from-[#faab19] before:via-[#344d36] before:to-[#faab19]">
+                {portfolioData.experience.map((exp, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0.85, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: i * 0.1 }}
+                    className="relative pl-12 sm:pl-16"
+                  >
+                    {/* Timeline Node with pulsing golden center */}
+                    <div className="absolute left-0 top-1 w-10 sm:w-12 h-10 sm:h-12 rounded-full flex items-center justify-center z-10 border-2 border-[#faab19] bg-[#344d36] shadow-md shadow-[#faab19]/25">
+                      <span className="w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-[#faab19] shadow-[0_0_8px_#faab19]" />
+                    </div>
+
+                    {/* Card */}
+                    <motion.div
+                      whileHover={{ y: -5, scale: 1.01 }}
+                      className="relative p-5 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl border-2 border-slate-200/90 hover:border-[#faab19] bg-white transition-all duration-300 group overflow-hidden shadow-lg shadow-[#344d36]/5 hover:shadow-2xl hover:shadow-[#faab19]/20"
+                    >
+                      {/* Top yellow-green accent border on hover */}
+                      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#faab19] via-[#344d36] to-[#faab19] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                      {/* Period Badge */}
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-[#faab19]/15 text-[#9e6b00] border border-[#faab19]/40 mb-3 shadow-xs">
+                        <Calendar className="w-3.5 h-3.5 text-[#faab19]" />
+                        <span>{exp.period}</span>
+                      </div>
+
+                      {/* Role */}
+                      <h4 className="text-xl sm:text-2xl font-black mb-1.5 text-[#1e2d20] transition-colors group-hover:text-[#faab19]">
+                        {exp.role}
+                      </h4>
+
+                      {/* Company */}
+                      <p className="text-sm sm:text-base font-bold text-[#344d36] mb-3.5 flex items-center gap-2">
+                        <Building2 className="w-4 h-4 text-[#faab19] shrink-0" />
+                        <span>{exp.company}</span>
+                      </p>
+
+                      {/* Description */}
+                      <p className="text-sm sm:text-base leading-relaxed text-slate-600 text-justify">
+                        {exp.description}
+                      </p>
+                    </motion.div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={{
-                hidden: { opacity: 0 },
-                visible: {
-                  opacity: 1,
-                  transition: {
-                    staggerChildren: 0.2
-                  }
-                }
-              }}
-              className={cn(
-                "space-y-6 sm:space-y-8 relative before:absolute before:left-[18px] sm:before:left-[23px] before:top-0 before:bottom-0 before:w-px",
-                darkMode ? "before:bg-slate-800" : "before:bg-slate-200"
-              )}
-            >
-              {portfolioData.education.map((edu, i) => (
-                <motion.div
-                  key={i}
-                  variants={{
-                    hidden: { opacity: 0, x: 20 },
-                    visible: { opacity: 1, x: 0 }
-                  }}
-                  className="relative pl-12 sm:pl-16"
-                >
-                  <div className={cn("absolute left-0 top-0 w-9 sm:w-12 h-9 sm:h-12 rounded-full flex items-center justify-center z-10 border shadow-sm backdrop-blur-xl", darkMode ? "bg-slate-900/90 border-white/10" : "bg-white/90 border-slate-200")}>
-                    <div className="w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-brand" />
-                  </div>
-                  <div className={cn(
-                    "p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl border transition-all hover:border-brand/40",
-                    darkMode ? "bg-white/[0.02] backdrop-blur-xl border-white/10" : "bg-white/60 backdrop-blur-lg border-indigo-100 hover:bg-white/80 shadow-xl shadow-indigo-100/30"
-                  )}>
-                    <span className="text-brand text-sm sm:text-base md:text-lg font-bold uppercase tracking-widest mb-2 block">{edu.period}</span>
-                    <h3 className={cn("text-xl sm:text-2xl font-bold mb-1", darkMode ? "text-white" : "text-slate-900")}>{edu.degree}</h3>
-                    <p className="text-slate-500 font-bold mb-3 sm:mb-4 text-base sm:text-xl">{edu.school}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
+
+            {/* 2. Education Column */}
+            <div>
+              <div className="flex items-center gap-3 sm:gap-4 mb-8 sm:mb-12 relative">
+                <div className="w-12 h-12 rounded-2xl bg-[#344d36] border-2 border-[#faab19] flex items-center justify-center shadow-lg shadow-[#344d36]/20">
+                  <GraduationCap className="w-6 h-6 text-[#faab19]" />
+                </div>
+                <div>
+                  <h3 className="text-2xl sm:text-3xl font-black text-[#1e2d20]">
+                    Education
+                  </h3>
+                  <div className="h-1.5 w-20 bg-gradient-to-r from-[#faab19] to-[#344d36] rounded-full mt-1.5 shadow-[0_0_10px_rgba(250,171,25,0.4)]" />
+                </div>
+              </div>
+
+              <div className="space-y-6 sm:space-y-8 relative before:absolute before:left-[19px] sm:before:left-[23px] before:top-4 before:bottom-4 before:w-[2px] before:bg-gradient-to-b before:from-[#faab19] before:via-[#344d36] before:to-[#faab19]">
+                {portfolioData.education.map((edu, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0.85, x: 10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: i * 0.1 }}
+                    className="relative pl-12 sm:pl-16"
+                  >
+                    {/* Timeline Node with pulsing golden center */}
+                    <div className="absolute left-0 top-1 w-10 sm:w-12 h-10 sm:h-12 rounded-full flex items-center justify-center z-10 border-2 border-[#faab19] bg-[#344d36] shadow-md shadow-[#faab19]/25">
+                      <span className="w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-[#faab19] shadow-[0_0_8px_#faab19]" />
+                    </div>
+
+                    {/* Card */}
+                    <motion.div
+                      whileHover={{ y: -5, scale: 1.01 }}
+                      className="relative p-5 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl border-2 border-slate-200/90 hover:border-[#faab19] bg-white transition-all duration-300 group overflow-hidden shadow-lg shadow-[#344d36]/5 hover:shadow-2xl hover:shadow-[#faab19]/20"
+                    >
+                      {/* Top yellow-green accent border on hover */}
+                      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#faab19] via-[#344d36] to-[#faab19] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                      {/* Period Badge */}
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-[#faab19]/15 text-[#9e6b00] border border-[#faab19]/40 mb-3 shadow-xs">
+                        <Calendar className="w-3.5 h-3.5 text-[#faab19]" />
+                        <span>{edu.period}</span>
+                      </div>
+
+                      {/* Degree */}
+                      <h4 className="text-lg sm:text-xl font-black mb-1.5 text-[#1e2d20] transition-colors group-hover:text-[#faab19]">
+                        {edu.degree}
+                      </h4>
+
+                      {/* School */}
+                      <p className="text-sm sm:text-base font-bold text-[#344d36] flex items-center gap-2">
+                        <GraduationCap className="w-4 h-4 text-[#faab19] shrink-0" />
+                        <span>{edu.school}</span>
+                      </p>
+                    </motion.div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -1286,416 +1503,323 @@ export default function App() {
         </div>
       </section>
 
-      {/* Let's Work Together */}
-      <section id="lets-talk" className={cn(
-        "py-12 lg:py-24 px-6 sm:px-12 my-8 mx-auto max-w-[95%] xl:max-w-7xl relative overflow-hidden border transition-colors duration-500 rounded-[2.5rem]",
-        darkMode ? "bg-white/[0.02] backdrop-blur-2xl border-white/5 hover:border-brand/30 shadow-[0_0_30px_rgba(37,99,235,0.03)] hover:shadow-[0_0_40px_rgba(37,99,235,0.1)] rounded-[2.5rem] transition-all duration-500" : "bg-white/40 backdrop-blur-3xl border-indigo-100/50 rounded-[3rem] shadow-[0_20px_50px_rgba(79,70,229,0.05)] transition-all duration-500"
-      )}>
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+      {/* ─── LET'S CREATE AN AMAZING PROJECT TOGETHER / CONTACT SECTION (Matching Reference Image) ─── */}
+      <section id="contact" className="w-full relative overflow-hidden bg-white">
+        
+        {/* TOP CALLOUT ON WHITE BACKGROUND */}
+        <div className="pt-20 sm:pt-28 pb-12 sm:pb-16 max-w-7xl mx-auto px-6 text-center">
+          {/* Main Heading */}
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className={cn(
-              "p-8 sm:p-12 rounded-[3rem] relative overflow-hidden group",
-              "border-2 transition-all duration-500 shadow-2xl",
-              darkMode
-                ? "bg-white/[0.03] border-brand/40 shadow-[0_0_30px_rgba(99,102,241,0.25)] hover:shadow-[0_0_50px_rgba(99,102,241,0.45)] hover:border-brand/70"
-                : "bg-white border-brand/30 shadow-[0_0_25px_rgba(99,102,241,0.15)] hover:shadow-[0_0_45px_rgba(99,102,241,0.3)] hover:border-brand/60"
-            )}
+            transition={{ duration: 0.6 }}
+            className="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-950 tracking-tight leading-[1.2] mb-6"
           >
-            {/* Animated top & bottom glow bars */}
-            <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-brand to-transparent animate-pulse" />
-            <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-accent to-transparent animate-pulse" />
-            <h2 className={cn("text-4xl md:text-5xl font-bold mb-6", darkMode ? "text-white" : "text-slate-900")}>Let's Work Together</h2>
-            <p className={cn("text-lg mb-10 max-w-2xl mx-auto text-justify sm:text-center", darkMode ? "text-slate-400" : "text-slate-600")}>
-              Ready to take your digital presence to the next level? I'm currently available for freelance projects and full-time opportunities.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => {
-                  setShowContactForm(true);
-                  setTimeout(() => {
-                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                  }, 100);
-                }}
-                className="px-10 py-4 bg-brand text-white rounded-2xl font-bold shadow-xl shadow-brand/20 hover:bg-brand/90 transition-all flex items-center gap-2"
-              >
-                Start a Project
-                <ArrowRight className="w-5 h-5" />
-              </motion.button>
-              <motion.a
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                href={`https://api.whatsapp.com/send?phone=${portfolioData.whatsapp.replace(/\D/g, '')}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cn(
-                  "px-10 py-4 rounded-2xl font-bold border transition-all flex items-center gap-2",
-                  darkMode ? "bg-white/[0.05] border-white/10 text-white hover:bg-white/[0.1]" : "bg-white border-slate-200 text-slate-900 hover:bg-slate-50"
-                )}
-              >
-                <MessageSquare className="w-5 h-5" />
-                WhatsApp Me
-              </motion.a>
-            </div>
+            Let’s Create an <span className="text-[#faab19] italic font-semibold">Amazing</span>
+            <br />
+            <span className="text-[#faab19] italic font-semibold">Project</span> Together!
+          </motion.h2>
+
+          {/* Composite CTA Pill Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="flex justify-center mb-8 sm:mb-12"
+          >
+            <button
+              type="button"
+              onClick={() => {
+                document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="inline-flex items-center rounded-full bg-[#344d36] hover:bg-[#283c2a] pl-6 sm:pl-7 pr-1.5 py-1.5 text-white font-bold text-sm shadow-xl shadow-[#344d36]/25 transition-all duration-300 group cursor-pointer"
+            >
+              <span className="pr-4 tracking-wide">Contact Us Now</span>
+              <span className="w-8 h-8 rounded-full bg-[#faab19] flex items-center justify-center text-[#344d36] transition-transform duration-300 group-hover:translate-x-1 shadow-sm">
+                <ArrowRight className="w-4 h-4 text-[#344d36]" />
+              </span>
+            </button>
           </motion.div>
         </div>
-      </section>
 
-      {/* Contact Section */}
-      {showContactForm && (
-        <motion.section
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          id="contact"
-          className={cn(
-            "py-16 sm:py-20 px-6 sm:px-12 my-8 mx-auto max-w-[95%] xl:max-w-7xl transition-colors duration-500 relative overflow-hidden z-10",
-            darkMode ? "bg-[#0f172a]/80 border-white/5 rounded-[2.5rem] shadow-2xl" : "bg-indigo-50/60 backdrop-blur-xl border border-indigo-200/50 rounded-[2.5rem] shadow-xl shadow-indigo-200/30"
-          )}
-        >
-          <div className="max-w-7xl mx-auto">
-            <div className={cn(
-              "rounded-2xl sm:rounded-3xl md:rounded-[40px] p-6 sm:p-12 md:p-16 lg:p-20 relative overflow-hidden shadow-2xl border transition-colors duration-500",
-              darkMode ? "bg-white/[0.02] backdrop-blur-xl border-white/10" : "bg-white border-slate-100"
-            )}>
-              <div className="absolute -top-20 -right-20 w-48 sm:w-64 h-48 sm:h-64 bg-brand/10 rounded-full blur-2xl sm:blur-3xl opacity-40 -z-10" />
-              <div className="absolute -bottom-20 -left-20 w-64 sm:w-80 h-64 sm:h-80 bg-accent/10 rounded-full blur-2xl sm:blur-3xl opacity-30 -z-10" />
+        {/* SCATTERED OVERLAPPING DESIGN & DEV PILLS ACROSS THE BORDER */}
+        <div className="relative z-20 -mb-4 sm:-mb-5 flex flex-wrap justify-center items-center gap-2 sm:gap-2.5 px-4 max-w-6xl mx-auto">
+          {[
+            { text: "Design System", bg: "bg-[#faab19]", textCol: "text-slate-950", rotate: "-rotate-6" },
+            { text: "Prototype", bg: "bg-[#344d36]", textCol: "text-white border border-white/20", rotate: "rotate-3" },
+            { text: "Wireframe Design", bg: "bg-[#faab19]", textCol: "text-slate-950", rotate: "-rotate-2" },
+            { text: "Mobile App Design", bg: "bg-[#344d36]", textCol: "text-white border border-white/20", rotate: "rotate-6" },
+            { text: "Website Design", bg: "bg-[#faab19]", textCol: "text-slate-950", rotate: "-rotate-3" },
+            { text: "Illustration", bg: "bg-[#344d36]", textCol: "text-white border border-white/20", rotate: "-rotate-8" },
+            { text: "UX/UI Design", bg: "bg-[#faab19]", textCol: "text-slate-950", rotate: "rotate-4" },
+            { text: "Brand Identity", bg: "bg-[#344d36]", textCol: "text-white border border-white/20", rotate: "-rotate-2" },
+            { text: "Landing Page", bg: "bg-[#faab19]", textCol: "text-slate-950", rotate: "rotate-3" },
+            { text: "Dashboard", bg: "bg-[#344d36]", textCol: "text-white border border-white/20", rotate: "-rotate-6" },
+            { text: "UI Design", bg: "bg-[#faab19]", textCol: "text-slate-950", rotate: "rotate-5" },
+            { text: "Product Design", bg: "bg-[#344d36]", textCol: "text-white border border-white/20", rotate: "-rotate-3" },
+            { text: "Brand Identity", bg: "bg-[#faab19]", textCol: "text-slate-950", rotate: "rotate-6" },
+          ].map((pill, idx) => (
+            <motion.span
+              key={idx}
+              whileHover={{ scale: 1.1, rotate: 0 }}
+              className={cn(
+                "inline-block px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold tracking-tight shadow-md select-none transition-transform cursor-default",
+                pill.bg,
+                pill.textCol,
+                pill.rotate
+              )}
+            >
+              {pill.text}
+            </motion.span>
+          ))}
+        </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 md:gap-16 lg:gap-20 items-center">
-                <div>
-                  <SectionTitle subtitle="Have a project in mind? Let's build something amazing together." darkMode={darkMode}>
-                    LET'S WORK TOGETHER
-                  </SectionTitle>
-
-                  <motion.div
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    variants={{
-                      hidden: { opacity: 0 },
-                      visible: {
-                        opacity: 1,
-                        transition: {
-                          staggerChildren: 0.2
-                        }
-                      }
-                    }}
-                    className="space-y-6 sm:space-y-8 mt-8 sm:mt-12"
-                  >
-                    <motion.div
-                      variants={{
-                        hidden: { opacity: 0, x: -20 },
-                        visible: { opacity: 1, x: 0 }
-                      }}
-                      className="flex items-center gap-4 sm:gap-6 group"
-                    >
-                      <a
-                        href={`https://mail.google.com/mail/?view=cm&fs=1&to=${portfolioData.email}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className={cn(
-                          "w-12 sm:w-14 h-12 sm:h-14 rounded-2xl flex items-center justify-center text-[#EA4335] transition-all shrink-0",
-                          darkMode ? "bg-white/[0.05] border-white/10 group-hover:bg-[#EA4335]/20" : "glass group-hover:bg-[#EA4335]/10"
-                        )}
-                      >
-                        <Mail className="w-5 sm:w-6 h-5 sm:h-6" />
-                      </a>
-                      <div>
-                        <p className="text-xs sm:text-sm text-slate-500 font-bold uppercase tracking-widest mb-1">Email Me</p>
-                        <a href={`https://mail.google.com/mail/?view=cm&fs=1&to=${portfolioData.email}`} target="_blank" rel="noreferrer" className={cn("text-base sm:text-lg lg:text-xl font-bold hover:text-[#EA4335] transition-colors line-clamp-1", darkMode ? "text-white" : "text-slate-900")}>
-                          {portfolioData.email}
-                        </a>
-                      </div>
-                    </motion.div>
-
-                    <motion.div
-                      variants={{
-                        hidden: { opacity: 0, x: -20 },
-                        visible: { opacity: 1, x: 0 }
-                      }}
-                      className="flex items-center gap-4 sm:gap-6 group"
-                    >
-                      <a
-                        href={portfolioData.linkedin}
-                        target="_blank"
-                        rel="noreferrer"
-                        className={cn(
-                          "w-12 sm:w-14 h-12 sm:h-14 rounded-2xl flex items-center justify-center text-[#0077B5] transition-all shrink-0",
-                          darkMode ? "bg-white/[0.05] border-white/10 group-hover:bg-[#0077B5]/20" : "glass group-hover:bg-[#0077B5]/10"
-                        )}
-                      >
-                        <Linkedin className="w-5 sm:w-6 h-5 sm:h-6" />
-                      </a>
-                      <div>
-                        <p className="text-xs sm:text-sm text-slate-500 font-bold uppercase tracking-widest mb-1">LinkedIn</p>
-                        <a href={portfolioData.linkedin} target="_blank" rel="noreferrer" className={cn("text-base sm:text-lg lg:text-xl font-bold hover:text-[#0077B5] transition-colors", darkMode ? "text-white" : "text-slate-900")}>
-                          Abdul Mubeen
-                        </a>
-                      </div>
-                    </motion.div>
-                    <motion.div
-                      variants={{
-                        hidden: { opacity: 0, x: -20 },
-                        visible: { opacity: 1, x: 0 }
-                      }}
-                      className="flex items-center gap-4 sm:gap-6 group"
-                    >
-                      <a
-                        href={`https://api.whatsapp.com/send?phone=${portfolioData.whatsapp.replace(/\D/g, '')}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className={cn(
-                          "w-12 sm:w-14 h-12 sm:h-14 rounded-2xl flex items-center justify-center text-[#25D366] transition-all shrink-0",
-                          darkMode ? "bg-white/[0.05] border-white/10 group-hover:bg-[#25D366]/20" : "glass group-hover:bg-[#25D366]/10"
-                        )}
-                      >
-                        <WhatsAppIcon className="w-5 sm:w-6 h-5 sm:h-6" />
-                      </a>
-                      <div>
-                        <p className="text-sm text-slate-500 font-bold uppercase tracking-widest mb-1">WhatsApp</p>
-                        <a href={`https://api.whatsapp.com/send?phone=${portfolioData.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noreferrer" className={cn("text-xl font-bold hover:text-[#25D366] transition-colors tracking-wide", darkMode ? "text-white" : "text-slate-900")}>
-                          {portfolioData.whatsapp}
-                        </a>
-                      </div>
-                    </motion.div>
-                  </motion.div>
-                </div>
-
-                <div className={cn(
-                  "p-8 md:p-12 rounded-3xl border relative overflow-hidden transition-colors duration-500",
-                  darkMode ? "bg-white/[0.03] border-white/10" : "bg-slate-50/50 border-slate-200"
-                )}>
-                  <motion.div
-                    animate={{
-                      scale: [1, 1.2, 1],
-                      opacity: [0.1, 0.2, 0.1]
-                    }}
-                    transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute -top-20 -right-20 w-64 h-64 bg-brand/10 rounded-full blur-3xl -z-10"
-                  />
-                  {formStatus === 'sent' ? (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      className="h-full flex flex-col items-center justify-center text-center py-12"
-                    >
-                      <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mb-6">
-                        <CheckCircle2 className="w-10 h-10 text-green-600" />
-                      </div>
-                      <h3 className={cn("text-2xl font-bold mb-2", darkMode ? "text-white" : "text-slate-900")}>Message Sent!</h3>
-                      <p className="text-slate-500">Thank you for reaching out. I'll get back to you at {portfolioData.email} soon.</p>
-                      <button
-                        onClick={() => setFormStatus('idle')}
-                        className="mt-6 text-brand font-bold text-sm hover:underline"
-                      >
-                        Send another message
-                      </button>
-                    </motion.div>
-                  ) : (
-                    <>
-                      <div className="mb-8">
-                        <h3 className={cn("text-2xl font-bold mb-2", darkMode ? "text-white" : "text-slate-900")}>Send a Message</h3>
-                        <p className="text-slate-500 text-sm">I'll get back to you within 24 hours.</p>
-                      </div>
-                      <motion.form
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        variants={{
-                          hidden: { opacity: 0 },
-                          visible: {
-                            opacity: 1,
-                            transition: {
-                              staggerChildren: 0.1
-                            }
-                          }
-                        }}
-                        className="space-y-6"
-                        onSubmit={handleContactSubmit}
-                      >
-                        <div className="grid md:grid-cols-2 gap-6">
-                          <motion.div
-                            variants={{
-                              hidden: { opacity: 0, y: 20 },
-                              visible: { opacity: 1, y: 0 }
-                            }}
-                            className="space-y-2"
-                          >
-                            <label className="text-base font-bold uppercase tracking-widest text-slate-500">Full Name</label>
-                            <input required name="name" type="text" className={cn("w-full border rounded-xl px-4 py-3 focus:outline-none focus:border-brand transition-all focus:ring-4 focus:ring-brand/5", darkMode ? "bg-white/[0.05] border-white/10 text-white" : "bg-white border-slate-200")} placeholder="Enter your name" />
-                          </motion.div>
-                          <motion.div
-                            variants={{
-                              hidden: { opacity: 0, y: 20 },
-                              visible: { opacity: 1, y: 0 }
-                            }}
-                            className="space-y-2"
-                          >
-                            <label className="text-base font-bold uppercase tracking-widest text-slate-500">Email Address</label>
-                            <input required name="email" type="email" className={cn("w-full border rounded-xl px-4 py-3 focus:outline-none focus:border-brand transition-all focus:ring-4 focus:ring-brand/5", darkMode ? "bg-white/[0.05] border-white/10 text-white" : "bg-white border-slate-200")} placeholder="Enter your email" />
-                          </motion.div>
-                        </div>
-                        <motion.div
-                          variants={{
-                            hidden: { opacity: 0, y: 20 },
-                            visible: { opacity: 1, y: 0 }
-                          }}
-                          className="space-y-2"
-                        >
-                          <label className="text-base font-bold uppercase tracking-widest text-slate-500">Subject</label>
-                          <input required name="subject" type="text" className={cn("w-full border rounded-xl px-4 py-3 focus:outline-none focus:border-brand transition-all focus:ring-4 focus:ring-brand/5", darkMode ? "bg-white/[0.05] border-white/10 text-white" : "bg-white border-slate-200")} placeholder="Project Inquiry" />
-                        </motion.div>
-                        <motion.div
-                          variants={{
-                            hidden: { opacity: 0, y: 20 },
-                            visible: { opacity: 1, y: 0 }
-                          }}
-                          className="space-y-2"
-                        >
-                          <label className="text-base font-bold uppercase tracking-widest text-slate-500">Message</label>
-                          <textarea required name="message" rows={4} className={cn("w-full border rounded-xl px-4 py-3 focus:outline-none focus:border-brand transition-all focus:ring-4 focus:ring-brand/5 resize-none", darkMode ? "bg-white/[0.05] border-white/10 text-white" : "bg-white border-slate-200")} placeholder="Tell me about your project..." />
-                        </motion.div>
-                        <motion.button
-                          variants={{
-                            hidden: { opacity: 0, y: 20 },
-                            visible: { opacity: 1, y: 0 }
-                          }}
-                          whileHover={{ scale: 1.02, y: -2 }}
-                          whileTap={{ scale: 0.98 }}
-                          disabled={formStatus === 'sending'}
-                          className="w-full py-4 bg-brand text-white font-bold rounded-xl shadow-lg shadow-brand/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                        >
-                          {formStatus === 'sending' ? (
-                            <>
-                              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                              Sending...
-                            </>
-                          ) : 'Send Message'}
-                        </motion.button>
-                      </motion.form>
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.section>
-      )}
-
-
-
-      {/* Philosophy Section */}
-      <section className={cn(
-        "py-8 lg:py-16 px-6 sm:px-12 md:px-20 transition-colors duration-500 relative overflow-hidden z-10 border-b",
-        darkMode ? "bg-white/[0.01] border-white/5" : "bg-slate-50/30 border-indigo-50"
-      )}>
-        <div className="max-w-7xl mx-auto">
-          <SectionTitle
-            subtitle="My philosophy is simple: keep it clean, make it fast, and focus on the user. Every pixel serves a purpose, and every line of code adds value."
-            darkMode={darkMode}
-            className="text-center flex flex-col items-center mb-10 sm:mb-16"
-          >
-            CORE PRINCIPLES
-          </SectionTitle>
-
-          <div className="grid lg:grid-cols-2 gap-10 sm:gap-16 items-center">
-            {/* Left Column: Philosophy Card */}
+        {/* MAIN DARK GREEN SECTION */}
+        <div id="contact-form" className="w-full bg-[#344d36] text-white pt-20 sm:pt-28 pb-20 sm:pb-28 px-6 sm:px-12 md:px-20 relative z-10">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-start w-full">
+            
+            {/* LEFT COLUMN: CONTACT DETAILS (Strictly 50% width on desktop) */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className={cn(
-                "px-5 py-6 sm:px-8 sm:py-8 rounded-[2.5rem] relative overflow-hidden group flex flex-col justify-center h-full",
-                "border-2 transition-all duration-500",
-                darkMode
-                  ? "bg-white/[0.03] border-brand/40 shadow-[0_0_30px_rgba(99,102,241,0.25)] hover:shadow-[0_0_50px_rgba(99,102,241,0.45)] hover:border-brand/70"
-                  : "bg-white border-brand/30 shadow-[0_0_25px_rgba(99,102,241,0.15)] hover:shadow-[0_0_45px_rgba(99,102,241,0.3)] hover:border-brand/60"
-              )}
+              transition={{ duration: 0.6 }}
+              className="w-full flex flex-col"
             >
-              {/* Animated top glow bar */}
-              <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-brand to-transparent animate-pulse" />
-              <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-accent to-transparent animate-pulse" />
-              <Quote className="absolute top-8 right-8 w-12 sm:w-16 h-12 sm:h-16 text-brand/10 group-hover:text-brand/30 transition-all duration-500 group-hover:scale-110" />
-              <p className={cn(
-                "text-base sm:text-lg font-medium leading-relaxed italic mb-3 relative z-10 text-justify",
-                darkMode ? "text-slate-200" : "text-slate-700"
-              )}>
-                "Success in web development is not just about writing code; it's about creating digital experiences that solve real problems and leave a lasting impression."
+              {/* Tag */}
+              <div className="inline-flex items-center gap-2 mb-4">
+                <span className="w-5 h-[2px] bg-[#faab19] inline-block" />
+                <span className="text-[#faab19] text-sm sm:text-base font-bold tracking-wide">
+                  Contact Us
+                </span>
+              </div>
+
+              {/* Heading */}
+              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-[1.15] tracking-tight mb-5">
+                Let’s Talk for <span className="text-[#faab19] italic font-semibold">Your</span>
+                <br />
+                <span className="text-[#faab19] italic font-semibold">Next Projects</span>
+              </h3>
+
+              {/* Description */}
+              <p className="text-slate-200 text-sm sm:text-base leading-relaxed mb-8 sm:mb-10 font-normal">
+                Have a project in mind or need assistance with frontend development, web performance, or modern UI/UX? Feel free to reach out and let's create something remarkable together.
               </p>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#5a968f]/60 shadow-[0_0_12px_rgba(90,150,143,0.4)] flex-shrink-0">
-                  <img
-                    src={portfolioData.profileImage}
-                    alt={portfolioData.name}
-                    className="w-full h-full object-cover"
-                    referrerPolicy="no-referrer"
-                    loading="lazy"
-                  />
-                </div>
-                <div>
-                  <h4 className={cn("font-bold text-lg", darkMode ? "text-white" : "text-slate-900")}>Abdul Mubeen</h4>
-                  <p className="text-sm text-slate-500 font-medium uppercase tracking-wider">Frontend Specialist</p>
+
+              {/* 4 Contact Items arranged in 2x2 grid */}
+              <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 pt-2">
+                <a
+                  href={`https://api.whatsapp.com/send?phone=${portfolioData.whatsapp.replace(/\D/g, '')}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-3 sm:gap-3.5 group hover:translate-x-1 transition-transform min-w-0"
+                >
+                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#faab19] text-slate-950 flex items-center justify-center shrink-0 shadow-md group-hover:scale-110 transition-transform">
+                    <WhatsAppIcon className="w-5 h-5 text-slate-950" />
+                  </div>
+                  <span className="text-xs sm:text-sm font-semibold text-white group-hover:text-[#faab19] transition-colors truncate">
+                    {portfolioData.whatsapp}
+                  </span>
+                </a>
+
+                <a
+                  href={`mailto:${portfolioData.email}`}
+                  className="flex items-center gap-3 sm:gap-3.5 group hover:translate-x-1 transition-transform min-w-0"
+                >
+                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#faab19] text-slate-950 flex items-center justify-center shrink-0 shadow-md group-hover:scale-110 transition-transform">
+                    <Mail className="w-5 h-5 text-slate-950" />
+                  </div>
+                  <span className="text-xs sm:text-sm font-semibold text-white group-hover:text-[#faab19] transition-colors truncate" title={portfolioData.email}>
+                    {portfolioData.email}
+                  </span>
+                </a>
+
+                <a
+                  href={portfolioData.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-3 sm:gap-3.5 group hover:translate-x-1 transition-transform min-w-0"
+                >
+                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#faab19] text-slate-950 flex items-center justify-center shrink-0 shadow-md group-hover:scale-110 transition-transform">
+                    <Linkedin className="w-5 h-5 text-slate-950" />
+                  </div>
+                  <span className="text-xs sm:text-sm font-semibold text-white group-hover:text-[#faab19] transition-colors truncate">
+                    Abdul Mubeen
+                  </span>
+                </a>
+
+                <div className="flex items-center gap-3 sm:gap-3.5 min-w-0">
+                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#faab19] text-slate-950 flex items-center justify-center shrink-0 shadow-md">
+                    <MapPin className="w-5 h-5 text-slate-950" />
+                  </div>
+                  <span className="text-xs sm:text-sm font-semibold text-white truncate" title="Gujrat / Lahore, Pakistan">
+                    Gujrat / Lahore, Pakistan
+                  </span>
                 </div>
               </div>
             </motion.div>
 
-            {/* Right Column: 4 Principle Cards */}
-            <div className="grid grid-cols-2 gap-4 h-full">
-              {[
-                { label: "Clean Code", icon: Code2, glow: "rgba(99,102,241,0.35)", hoverGlow: "rgba(99,102,241,0.6)" },
-                { label: "User Centric", icon: User, glow: "rgba(16,185,129,0.3)", hoverGlow: "rgba(16,185,129,0.55)" },
-                { label: "High Speed", icon: Cpu, glow: "rgba(245,158,11,0.3)", hoverGlow: "rgba(245,158,11,0.55)" },
-                { label: "Responsive", icon: Smartphone, glow: "rgba(99,102,241,0.3)", hoverGlow: "rgba(99,102,241,0.55)" }
-              ].map((item, i) => (
-                <motion.div
-                  key={i}
-                  whileHover={{ y: -5, scale: 1.05 }}
-                  className={cn(
-                    "p-3 sm:p-5 rounded-2xl border-2 flex flex-col items-center justify-center gap-2 text-center transition-all duration-300 relative overflow-hidden group",
-                    darkMode
-                      ? "bg-white/[0.03] border-brand/30 hover:border-brand/60"
-                      : "bg-white border-brand/20 hover:border-brand/50 shadow-sm"
+            {/* RIGHT COLUMN: THE FORM (Strictly 50% width on desktop) */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="w-full flex flex-col"
+            >
+              {formStatus === 'sent' ? (
+                <div className="bg-[#273d29] border border-white/10 rounded-2xl p-8 sm:p-12 text-center flex flex-col items-center justify-center">
+                  <div className="w-16 h-16 rounded-full bg-[#faab19] text-slate-950 flex items-center justify-center mb-4">
+                    <CheckCircle2 className="w-9 h-9" />
+                  </div>
+                  <h4 className="text-2xl font-bold text-white mb-2">Message Sent Successfully!</h4>
+                  <p className="text-slate-300 max-w-md mb-6 text-sm">
+                    Thank you for reaching out. I'll review your project details and get back to you shortly.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setFormStatus('idle')}
+                    className="px-6 py-2.5 rounded-full bg-[#faab19] text-slate-950 font-bold text-sm hover:bg-[#e59910] transition-colors cursor-pointer"
+                  >
+                    Send Another Message
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleContactSubmit} className="space-y-4 sm:space-y-5">
+                  {formFeedback && (
+                    <div className="p-3.5 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-200 text-xs sm:text-sm flex items-start justify-between gap-3">
+                      <span>{formFeedback}</span>
+                      <button
+                        type="button"
+                        onClick={() => setFormFeedback(null)}
+                        className="text-amber-300 hover:text-white font-bold text-xs shrink-0"
+                      >
+                        ✕
+                      </button>
+                    </div>
                   )}
-                  style={{
-                    boxShadow: `0 0 18px ${item.glow}`,
-                  }}
-                  onHoverStart={(e) => {
-                    (e.target as HTMLElement).style.boxShadow = `0 0 35px ${item.hoverGlow}`;
-                  }}
-                  onHoverEnd={(e) => {
-                    (e.target as HTMLElement).style.boxShadow = `0 0 18px ${item.glow}`;
-                  }}
-                >
-                  {/* Animated top glow line */}
-                  <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-brand to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
-                  <item.icon className="w-6 sm:w-8 h-6 sm:h-8 text-brand group-hover:scale-110 transition-transform duration-300" />
-                  <span className={cn("text-xs sm:text-sm font-bold uppercase tracking-widest", darkMode ? "text-slate-300" : "text-slate-700")}>
-                    {item.label}
-                  </span>
-                </motion.div>
-              ))}
-            </div>
+
+                  {/* Row 1: Name & Email */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                    <div>
+                      <label className="block text-xs sm:text-sm font-semibold text-slate-200 mb-2">
+                        Your Name *
+                      </label>
+                      <input
+                        type="text"
+                        name="name"
+                        required
+                        placeholder="Ex. John Doe"
+                        className="w-full bg-[#273d29] border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-400 focus:outline-none focus:border-[#faab19] transition-all text-sm font-medium"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs sm:text-sm font-semibold text-slate-200 mb-2">
+                        Email *
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        required
+                        placeholder="example@gmail.com"
+                        className="w-full bg-[#273d29] border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-400 focus:outline-none focus:border-[#faab19] transition-all text-sm font-medium"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Row 2: WhatsApp & Interested in */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                    <div>
+                      <label className="block text-xs sm:text-sm font-semibold text-slate-200 mb-2">
+                        WhatsApp *
+                      </label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        required
+                        placeholder="Enter WhatsApp Number"
+                        className="w-full bg-[#273d29] border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-400 focus:outline-none focus:border-[#faab19] transition-all text-sm font-medium"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs sm:text-sm font-semibold text-slate-200 mb-2">
+                        I'm Interested in *
+                      </label>
+                      <div className="relative">
+                        <select
+                          name="interest"
+                          defaultValue=""
+                          required
+                          className="w-full bg-[#273d29] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#faab19] transition-all text-sm font-medium appearance-none cursor-pointer pr-10"
+                        >
+                          <option value="" disabled className="bg-[#273d29] text-slate-400">Select</option>
+                          <option value="Frontend Development" className="bg-[#273d29] text-white">Frontend Development</option>
+                          <option value="Web Performance & SEO" className="bg-[#273d29] text-white">Web Performance & SEO</option>
+                          <option value="Modern UI/UX Design" className="bg-[#273d29] text-white">Modern UI/UX Design</option>
+                          <option value="Full Website Build" className="bg-[#273d29] text-white">Full Website Build</option>
+                          <option value="Consultation & Review" className="bg-[#273d29] text-white">Consultation & Review</option>
+                        </select>
+                        <ChevronDown className="w-4 h-4 text-slate-400 pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Row 3: Your Message */}
+                  <div>
+                    <label className="block text-xs sm:text-sm font-semibold text-slate-200 mb-2">
+                      Your Message *
+                    </label>
+                    <textarea
+                      name="message"
+                      required
+                      rows={4}
+                      placeholder="Enter here..."
+                      className="w-full bg-[#273d29] border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-400 focus:outline-none focus:border-[#faab19] transition-all text-sm font-medium resize-none"
+                    />
+                  </div>
+
+                  {/* Row 4: Submit Composite Pill Button */}
+                  <div className="pt-2">
+                    <button
+                      type="submit"
+                      disabled={formStatus === 'sending'}
+                      className="inline-flex items-center rounded-full bg-[#203222] hover:bg-[#1a281c] border border-white/15 pl-6 sm:pl-7 pr-1.5 py-1.5 text-white font-bold text-sm shadow-xl transition-all duration-300 group cursor-pointer disabled:opacity-50"
+                    >
+                      <span className="pr-4 tracking-wide">
+                        {formStatus === 'sending' ? 'Sending...' : 'Submit'}
+                      </span>
+                      <span className="w-8 h-8 rounded-full bg-[#faab19] flex items-center justify-center text-[#344d36] transition-transform duration-300 group-hover:translate-x-1 shadow-sm">
+                        <ArrowRight className="w-4 h-4 text-[#344d36]" />
+                      </span>
+                    </button>
+                  </div>
+                </form>
+              )}
+            </motion.div>
+
           </div>
         </div>
+
       </section>
 
-      {/* Footer */}
-      <footer className={cn(
-        "py-10 lg:py-20 px-6 transition-all duration-500 mt-4 lg:mt-12",
-        "bg-[#f5faf9] border border-indigo-100/50 rounded-[3rem] shadow-[0_20px_50px_rgba(90,150,143,0.05)]"
-      )}>
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-12 mb-16">
-            <div className="col-span-2">
+      {/* Footer - Matching Uploaded Reference Design */}
+      <footer className="w-full bg-white border-t border-slate-200/80 pt-16 sm:pt-20">
+        <div className="max-w-7xl mx-auto px-6 sm:px-12 md:px-20 mb-14 sm:mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 sm:gap-12 lg:gap-16">
+            
+            {/* 1. Left Brand Column: Profile Pic + Bio + Yellow Social Buttons */}
+            <div className="md:col-span-5 lg:col-span-5 flex flex-col">
+              {/* Brand Logo & Name */}
               <div
-                className="flex items-center gap-3 mb-6 cursor-pointer group"
+                className="flex items-center gap-3.5 mb-5 cursor-pointer group select-none self-start"
                 onClick={(e) => handleNavClick(e as any, '#top')}
                 aria-label="Back to top"
               >
-                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#5a968f] shadow-sm transition-transform group-hover:scale-110">
+                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#faab19] shadow-md group-hover:scale-105 transition-transform shrink-0">
                   <img
                     src={portfolioData.profileImage}
                     alt={portfolioData.name}
@@ -1704,95 +1828,110 @@ export default function App() {
                     referrerPolicy="no-referrer"
                   />
                 </div>
-                <span className="text-2xl font-display font-bold tracking-tighter text-black">
-                  {portfolioData.name}<span className="text-brand">.</span>
+                <span className="text-2xl sm:text-3xl font-black text-black tracking-tight">
+                  {portfolioData.name}<span className="text-[#faab19]">.</span>
                 </span>
               </div>
-              <p className="max-w-sm leading-relaxed mb-8 text-justify text-base text-black">
-                Crafting high-performance digital experiences with precision and passion. Let's build something extraordinary together.
+
+              {/* Bio Paragraph in Solid Black */}
+              <p className="text-black text-sm sm:text-base leading-relaxed mb-6 max-w-sm font-medium">
+                Front-End Developer & Web Manager crafting high-performance digital experiences with precision, modern UI/UX design, and clean scalable code.
               </p>
-              <div className="flex flex-wrap gap-4">
+
+              {/* Circular Golden-Yellow Social Buttons */}
+              <div className="flex items-center gap-3">
                 {[
                   { icon: Github, href: portfolioData.github, label: "GitHub" },
                   { icon: Linkedin, href: portfolioData.linkedin, label: "LinkedIn" },
-                  { icon: Mail, href: `mailto:${portfolioData.email}`, label: "Email" },
-                  { icon: WhatsAppIcon, href: `https://api.whatsapp.com/send?phone=${portfolioData.whatsapp.replace(/\D/g, '')}`, label: "WhatsApp" }
+                  { icon: WhatsAppIcon, href: `https://api.whatsapp.com/send?phone=${portfolioData.whatsapp.replace(/\D/g, '')}`, label: "WhatsApp" },
+                  { icon: Mail, href: `mailto:${portfolioData.email}`, label: "Email" }
                 ].map((social, i) => (
                   <motion.a
                     key={i}
                     href={social.href}
                     target="_blank"
                     rel="noreferrer"
-                    whileHover={{ y: -5, scale: 1.1 }}
-                    className={cn(
-                      "w-12 h-12 rounded-full flex items-center justify-center transition-all border border-transparent shadow-lg text-white bg-[#5a968f] hover:bg-[#5a968f]/80"
-                    )}
+                    aria-label={social.label}
+                    whileHover={{ y: -4, scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-10 h-10 rounded-full bg-[#faab19] hover:bg-[#e59910] text-black flex items-center justify-center shadow-sm transition-all duration-300"
                   >
-                    <social.icon className="w-6 h-6" />
+                    <social.icon className="w-5 h-5 text-black" />
                   </motion.a>
                 ))}
               </div>
             </div>
 
-            <div>
-              <h4 className="font-bold mb-6 uppercase tracking-widest text-sm text-[#5a968f]">Quick Links</h4>
-              <ul className="space-y-4">
+            {/* 2. Middle Quick Links Column with matching icons */}
+            <div className="md:col-span-3 lg:col-span-3">
+              <h4 className="text-[#faab19] font-black text-lg sm:text-xl mb-5 tracking-tight">
+                Quick Links
+              </h4>
+              <ul className="space-y-3 sm:space-y-3.5">
                 {[
-                  { name: 'About Me', href: '#about', icon: User, color: "text-blue-500" },
-                  { name: 'Technical Skills', href: '#skills', icon: Cpu, color: "text-purple-500" },
-                  { name: 'Projects', href: '#projects', icon: Layout, color: "text-brand" },
-                  { name: 'Experience', href: '#experience', icon: Briefcase, color: "text-accent" },
+                  { name: 'Home', href: '#top', icon: Home },
+                  { name: 'About Me', href: '#about', icon: User },
+                  { name: 'Technical Skills', href: '#skills', icon: Code2 },
+                  { name: 'Experience', href: '#experience', icon: Briefcase },
+                  { name: 'Projects', href: '#projects', icon: Layout },
+                  { name: 'Contact', href: '#contact', icon: Phone },
                 ].map(link => (
                   <li key={link.name}>
-                    <motion.a
+                    <a
                       href={link.href}
                       onClick={(e) => handleNavClick(e, link.href)}
-                      whileHover={{ x: 5 }}
-                      className="transition-colors text-base font-medium flex items-center gap-3 text-black hover:text-brand"
+                      className="text-black hover:text-[#faab19] text-sm sm:text-base font-semibold transition-colors inline-flex items-center gap-2.5 cursor-pointer group"
                     >
-                      <link.icon className={cn("w-6 h-6", link.color)} />
-                      {link.name}
-                    </motion.a>
+                      <link.icon className="w-4 h-4 text-[#faab19] shrink-0 transition-transform group-hover:scale-110" />
+                      <span>{link.name}</span>
+                    </a>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div>
-              <h4 className="font-bold mb-6 uppercase tracking-widest text-sm text-[#5a968f]">Contact</h4>
-              <ul className="space-y-4">
-                <motion.li whileHover={{ x: 5 }} className="flex items-center gap-3 sm:gap-4 text-sm sm:text-base group text-black">
-                  <a href={`mailto:${portfolioData.email}`} className="flex items-center gap-3 sm:gap-4 hover:text-brand transition-colors font-medium break-all">
-                    <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-[#EA4335] shrink-0" />
-                    {portfolioData.email}
+            {/* 3. Right Contact Column with matching icons (#faab19) and Solid Black Text */}
+            <div className="md:col-span-4 lg:col-span-4">
+              <h4 className="text-[#faab19] font-black text-lg sm:text-xl mb-5 tracking-tight">
+                Contact
+              </h4>
+              <ul className="space-y-3.5 sm:space-y-4 text-black text-sm sm:text-base font-semibold">
+                <li>
+                  <a
+                    href={`https://api.whatsapp.com/send?phone=${portfolioData.whatsapp.replace(/\D/g, '')}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover:text-[#faab19] transition-colors inline-flex items-center gap-3"
+                  >
+                    <WhatsAppIcon className="w-5 h-5 text-[#faab19] shrink-0" />
+                    <span>{portfolioData.whatsapp}</span>
                   </a>
-                </motion.li>
-                <motion.li whileHover={{ x: 5 }} className="flex items-center gap-3 sm:gap-4 text-sm sm:text-base group text-black">
-                  <a href={`https://api.whatsapp.com/send?phone=${portfolioData.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noreferrer" className="flex items-center gap-3 sm:gap-4 hover:text-brand transition-colors font-medium whitespace-nowrap">
-                    <WhatsAppIcon className="w-5 h-5 sm:w-6 sm:h-6 text-[#25D366] shrink-0" />
-                    {portfolioData.whatsapp}
+                </li>
+                <li>
+                  <a
+                    href={`mailto:${portfolioData.email}`}
+                    className="hover:text-[#faab19] transition-colors break-all inline-flex items-center gap-3"
+                  >
+                    <Mail className="w-5 h-5 text-[#faab19] shrink-0" />
+                    <span>{portfolioData.email}</span>
                   </a>
-                </motion.li>
-                <motion.li whileHover={{ x: 5 }} className="flex items-center gap-4 text-base group cursor-default text-black">
-                  <MapPin className="w-6 h-6 text-blue-500" />
-                  <span className="font-medium">Gujrat, Pakistan</span>
-                </motion.li>
+                </li>
+                <li className="inline-flex items-center gap-3 text-black">
+                  <MapPin className="w-5 h-5 text-[#faab19] shrink-0" />
+                  <span>Gujrat / Lahore, Pakistan</span>
+                </li>
               </ul>
             </div>
+
           </div>
+        </div>
 
-          <div className={cn(
-            "mt-12 p-8 flex flex-col md:flex-row justify-between items-center gap-6 rounded-[2rem] shadow-inner",
-            "bg-[#5a968f] text-white"
-          )}>
-            <p className="text-white text-base font-bold">
-              © {new Date().getFullYear()} {portfolioData.name}. All rights reserved.
+        {/* Bottom Full-Width Dark Green Bar with Centered Copyright Text */}
+        <div className="w-full bg-[#344d36] py-5 px-6 sm:px-12 md:px-20 text-white">
+          <div className="max-w-7xl mx-auto flex justify-center items-center text-xs sm:text-sm">
+            <p className="text-white font-medium text-center">
+              Copyright © {new Date().getFullYear()} <span className="text-[#faab19] font-bold">{portfolioData.name}</span>. All Rights Reserved.
             </p>
-
-            <div className="flex gap-6">
-              <a href="#" className="text-white hover:text-white/80 text-base font-bold uppercase tracking-widest transition-colors">Privacy Policy</a>
-              <a href="#" className="text-white hover:text-white/80 text-base font-bold uppercase tracking-widest transition-colors">Terms of Service</a>
-            </div>
           </div>
         </div>
       </footer>
